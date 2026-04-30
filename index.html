@@ -556,42 +556,12 @@
     <div class="header-actions">
     <button class="lock-header-btn" onclick="lockKB()" title="锁定知识库">🔒 锁定</button>
       <button class="action-btn success" onclick="openInFinder()">📂 打开文件夹</button>
-      <button class="action-btn primary" onclick="bookmarkThis()">⭐ 加入书签</button>
       <button class="action-btn" onclick="copyLink()">📋 复制地址</button>
     </div>
   </div>
   <div class="search-bar">
     <span class="search-icon">🔍</span>
     <input type="text" id="searchInput" placeholder="搜索产品、文章、标签、关键词..." oninput="onGlobalSearch()">
-  </div>
-</div>
-
-<!-- AI Assistant Banner -->
-<div class="ai-banner" id="aiBanner">
-  <div class="ai-banner-left">
-    <div class="ai-avatar">🤖</div>
-    <div class="ai-text">
-      <h3>AI 知识助手</h3>
-      <p>直接提问，我会结合你的知识库内容回答你</p>
-    </div>
-  </div>
-  <div class="ai-input-wrap">
-    <input class="ai-input" id="aiInput" placeholder="例如：帮我总结阅读专区里关于AI教育的所有文章..." onkeydown="if(event.key==='Enter')sendToAI()">
-    <button class="ai-send" onclick="sendToAI()">发送 →</button>
-  </div>
-</div>
-
-<!-- Access Info Banner -->
-<div class="access-banner local" id="accessBanner">
-  <div class="access-icon">💻</div>
-  <div class="access-info">
-    <h4>本地访问模式</h4>
-    <p>PDF 文件可直接点击打开（需本地服务器运行中）。阅读专区的链接可随时跳转。</p>
-  </div>
-  <div class="access-url" id="accessUrl"></div>
-  <div class="access-actions">
-    <button class="batch-btn primary" onclick="showDeployGuide()">🚀 部署到线上</button>
-    <button class="batch-btn" onclick="copyLink()">📋 复制地址</button>
   </div>
 </div>
 
@@ -725,6 +695,21 @@
       </div>
     </div>
   </div>
+
+<!-- AI Assistant Banner (Bottom) -->
+<div class="ai-banner" id="aiBanner">
+  <div class="ai-banner-left">
+    <div class="ai-avatar">🤖</div>
+    <div class="ai-text">
+      <h3>AI 知识助手</h3>
+      <p>直接提问，我会结合你的知识库内容回答你</p>
+    </div>
+  </div>
+  <div class="ai-input-wrap">
+    <input class="ai-input" id="aiInput" placeholder="例如：帮我总结阅读专区里关于AI教育的所有文章..." onkeydown="if(event.key==='Enter')sendToAI()">
+    <button class="ai-send" onclick="sendToAI()">发送 →</button>
+  </div>
+</div>
 
 <div class="footer">
   <p>My Knowledge Base — Work · Reading · Writing · Life · 最后更新 2026-04-30</p>
@@ -1361,19 +1346,14 @@ function onGlobalSearch() {
 // ============================================================
 function detectMode() {
     const isLocal = location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-    const banner = document.getElementById('accessBanner');
     const notice = document.getElementById('topNotice');
     const modeLabel = document.getElementById('modeLabel');
-    const urlEl = document.getElementById('accessUrl');
 
     if (!isLocal) {
-        banner.className = 'access-banner online';
-        banner.querySelector('.access-icon').textContent = '\u2601\uFE0F';
-        banner.querySelector('h4').textContent = '\u7ebf\u4e0a\u8bbf\u95ee\u6a21\u5f0f';
-        banner.querySelector('p').textContent = '\u5f53\u524d\u5df2\u90e8\u7f72\u5230\u7ebf\u4e0a\uff0c\u53ef\u5728\u4efb\u610f\u8bbe\u5907\u4e0a\u8bbf\u95ee\u3002';
-        if (modeLabel) modeLabel.textContent = '\u7ebf\u4e0a\u6a21\u5f0f';
-        if (notice) notice.innerHTML = '\u2601\uFE0F \u5f53\u524d\u4e3a <strong>\u7ebf\u4e0a\u6a21\u5f0f</strong> \u00B7 \u56fa\u5b9a\u8bbf\u95ee\u5730\u5740\uff0c\u968f\u65f6\u968f\u5730\u67e5\u770b\u77e5\u8bc6\u5e93';
+        if (modeLabel) modeLabel.textContent = '线上模式';
+        if (notice) notice.innerHTML = '☁️ 当前为 <strong>线上模式</strong> · 固定访问地址，随时随地查看知识库';
     }
+}
     if (urlEl) { urlEl.textContent = location.href; urlEl.title = location.href; urlEl.style.cursor = 'pointer'; urlEl.onclick = function(){ navigator.clipboard.writeText(location.href); showToast('\u5730\u5740\u5df2\u590d\u5236\uff01'); }; }
 }
 
