@@ -95,25 +95,7 @@
   }
   .ai-send:hover { transform: scale(1.05); }
 
-  /* Access Banner */
-  .access-banner {
-    margin: 20px 32px 0; border-radius: var(--radius); padding: 16px 24px;
-    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-  }
-  .access-banner.local { background: var(--warning-light); border: 1px solid #FDE68A; }
-  .access-banner.online { background: var(--success-light); border: 1px solid #A7F3D0; }
-  .access-icon { font-size: 28px; flex-shrink: 0; }
-  .access-info { flex: 1; min-width: 200px; }
-  .access-info h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
-  .access-info p { font-size: 12px; color: var(--text-secondary); }
-  .access-url {
-    font-family: "SF Mono", Monaco, monospace; font-size: 12px; padding: 6px 12px;
-    border-radius: 6px; background: white; border: 1px solid var(--border);
-    max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .access-actions { display: flex; gap: 8px; }
-
-  /* Bookmark bar */
+  /* Access Icon & Info (legacy, kept for potential reuse) */
   .bookmark-bar {
     background: var(--surface); border-bottom: 1px solid var(--border-light);
     padding: 10px 32px; display: flex; align-items: center; gap: 8px;
@@ -435,11 +417,9 @@
   @media (max-width: 768px) {
     .header { padding: 16px 20px; }
     .ai-banner { margin: 16px 16px 0; padding: 16px 20px; }
-    .access-banner { margin: 16px; }
     .bookmark-bar { padding: 10px 16px; }
     .main { padding: 20px 16px; }
     .categories-grid { grid-template-columns: 1fr; }
-    .access-url { display: none; }
     .reading-card { flex-direction: column; gap: 12px; }
     .reading-actions { flex-direction: row; justify-content: flex-end; }
     .tab-nav { width: 100%; overflow-x: auto; }
@@ -1369,12 +1349,6 @@ function showToast(msg) {
     setTimeout(function(){ t.classList.remove('show'); }, 2500);
 }
 
-function bookmarkThis() {
-    if (window.sidebar && window.sidebar.addPanel) { window.sidebar.addPanel(document.title, location.href, ''); }
-    else if (window.external && ('AddFavorite' in window.external)) { window.external.AddFavorite(location.href, document.title); }
-    else { showToast('\u8bf7\u6309 Cmd+D (Mac) \u6216 Ctrl+D (Windows) \u5c06\u6b64\u9875\u52a0\u5165\u6536\u85cf\u5939'); }
-}
-
 function copyLink() {
     navigator.clipboard.writeText(window.location.href).then(function(){showToast('\u5730\u5740\u5df2\u590d\u5236\u5230\u526a\u8d34\u677f')}).catch(function(){
         var inp = document.createElement('input'); inp.value = window.location.href; document.body.appendChild(inp); inp.select(); document.execCommand('copy'); document.body.removeChild(inp); showToast('\u5730\u5740\u5df2\u590d\u5236');
@@ -1416,6 +1390,8 @@ document.addEventListener('keydown', function(e) {
           <p>Miscellaneous items that don't fit elsewhere.</p>
         </div>
     </div>
+  </div>
+
   </div>
 
 </div><!-- /main-content-wrapper -->
