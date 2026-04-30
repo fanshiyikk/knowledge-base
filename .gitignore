@@ -1,0 +1,6 @@
+# PDF files - too large for GitHub, keep local only
+*.pdf
+
+# OS
+.DS_Store
+Thumbs.db
