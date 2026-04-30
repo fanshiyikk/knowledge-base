@@ -6,527 +6,892 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>我的知识库</title>
+<title>My Knowledge Base</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #F9FAFB; --surface: #FFFFFF; --primary: #4F46E5; --primary-light: #EEF2FF;
-    --text: #111827; --text-secondary: #6B7280; --text-muted: #9CA3AF;
-    --border: #E5E7EB; --border-light: #F3F4F6;
-    --radius: 12px; --radius-sm: 8px;
-    --success: #059669; --success-light: #ECFDF5;
-    --warning: #D97706; --warning-light: #FEF3C7;
-    --reading-color: #DC2626; --reading-light: #FEF2F2;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh;
-  }
+/* ====== DESIGN SYSTEM: Literary Hub Inspired ====== */
+:root {
+  --bg: #FFF9ED;
+  --surface: #FFFFFF;
+  --primary: #8B2500;
+  --primary-dark: #6B1D00;
+  --primary-light: #FFF0EB;
+  --primary-fade: rgba(139,37,0,0.08);
+  --text: #1A1A1A;
+  --text-secondary: #555555;
+  --text-muted: #888888;
+  --border: #E8DED5;
+  --border-light: #F2E9E1;
+  --radius: 4px;
+  --radius-sm: 3px;
+  --success: #1B7A3D;
+  --success-light: #F0FAF4;
+  --reading-color: #C41E3A;
+  --reading-light: #FFF0F3;
+  --accent-gold: #B8860B;
+  --accent-blue: #2C5282;
+}
 
-  /* ====== Top Notice ====== */
-  .top-notice {
-    background: linear-gradient(135deg, #4F46E5, #7C3AED);
-    color: white; text-align: center; padding: 8px 16px; font-size: 13px; font-weight: 500;
-  }
-  .top-notice a { color: #FEF08A; text-decoration: none; font-weight: 600; }
-  .top-notice a:hover { text-decoration: underline; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-  /* ====== Header ====== */
-  .header {
-    background: var(--surface); border-bottom: 1px solid var(--border);
-    padding: 24px 32px; position: sticky; top: 0; z-index: 100;
-  }
-  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
-  .logo { display: flex; align-items: center; gap: 12px; }
-  .logo-icon {
-    width: 42px; height: 42px; border-radius: 11px;
-    background: linear-gradient(135deg, #4F46E5, #7C3AED);
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-size: 19px; font-weight: 700;
-  }
-  .logo h1 { font-size: 20px; font-weight: 600; }
-  .logo p { font-size: 13px; color: var(--text-secondary); }
-  .header-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-  .action-btn {
-    padding: 8px 18px; border-radius: 50px; font-size: 13px; font-weight: 500;
-    border: 1px solid var(--border); background: var(--surface); cursor: pointer;
-    transition: all 0.2s; display: flex; align-items: center; gap: 6px;
-  }
-  .action-btn:hover { border-color: var(--primary); color: var(--primary); }
-  .action-btn.primary { background: var(--primary); color: white; border-color: var(--primary); }
-  .action-btn.primary:hover { opacity: 0.9; }
-  .action-btn.success { background: var(--success); color: white; border-color: var(--success); }
-  .action-btn.success:hover { opacity: 0.9; }
-  .header-stats { display: flex; gap: 20px; }
-  .stat { text-align: center; }
-  .stat-num { font-size: 22px; font-weight: 700; color: var(--primary); }
-  .stat-label { font-size: 12px; color: var(--text-secondary); }
-  .search-bar { position: relative; max-width: 480px; width: 100%; }
-  .search-bar input {
-    width: 100%; padding: 10px 16px 10px 44px;
-    border: 1px solid var(--border); border-radius: 50px;
-    font-size: 14px; background: var(--bg); outline: none; transition: all 0.2s;
-  }
-  .search-bar input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
-  .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 15px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  min-height: 100vh;
+}
 
-  /* AI Banner */
-  .ai-banner {
-    background: linear-gradient(135deg, #4F46E5, #7C3AED);
-    margin: 24px 32px 0; border-radius: var(--radius); padding: 20px 28px;
-    color: white; display: flex; align-items: center; justify-content: space-between;
-    gap: 16px; flex-wrap: wrap;
-  }
-  .ai-banner-left { display: flex; align-items: center; gap: 14px; }
-  .ai-avatar {
-    width: 48px; height: 48px; border-radius: 14px;
-    background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);
-    display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;
-  }
-  .ai-text h3 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
-  .ai-text p { font-size: 13px; opacity: 0.85; }
-  .ai-input-wrap { display: flex; gap: 8px; width: 100%; max-width: 420px; margin-top: 4px; }
-  .ai-input {
-    flex: 1; padding: 10px 16px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.3);
-    background: rgba(255,255,255,0.15); color: white; font-size: 14px;
-    outline: none;
-  }
-  .ai-input::placeholder { color: rgba(255,255,255,0.6); }
-  .ai-send {
-    padding: 10px 20px; border-radius: 50px; background: white; color: var(--primary);
-    border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
-  }
-  .ai-send:hover { transform: scale(1.05); }
+/* Decorative background pattern */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; height: 420px;
+  background: linear-gradient(180deg, rgba(139,37,0,0.03) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
 
-  /* Access Icon & Info (legacy, kept for potential reuse) */
-  .bookmark-bar {
-    background: var(--surface); border-bottom: 1px solid var(--border-light);
-    padding: 10px 32px; display: flex; align-items: center; gap: 8px;
-    overflow-x: auto; flex-wrap: nowrap;
-  }
-  .bookmark-label { font-size: 12px; color: var(--text-muted); font-weight: 500; white-space: nowrap; }
-  .bookmark-item {
-    padding: 5px 14px; border-radius: 50px; font-size: 12px; font-weight: 500;
-    background: var(--bg); color: var(--text-secondary); border: 1px solid var(--border-light);
-    cursor: pointer; transition: all 0.2s; white-space: nowrap; text-decoration: none;
-    display: inline-flex; align-items: center; gap: 4px;
-  }
-  .bookmark-item:hover { border-color: var(--primary); color: var(--primary); }
-  .bookmark-item.reading-active { background: var(--reading-light); color: var(--reading-color); border-color: #FECACA; font-weight: 600; }
+/* ====== Typography ====== */
+.serif { font-family: "Playfair Display", "Noto Serif SC", "Source Han Serif SC", Georgia, serif; }
+h1, h2, h3, .logo h1, .card-title, .section-title, .hero-title, .lock-title { font-family: "Playfair Display", "Noto Serif SC", Georgia, serif; }
 
-  /* Main Content */
-  .main { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+/* ====== Top Notice Bar ====== */
+.top-notice {
+  background: var(--primary);
+  color: white;
+  text-align: center;
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+.top-notice a { color: #FFD700; text-decoration: none; font-weight: 600; }
+.top-notice a:hover { text-decoration: underline; }
 
-  /* Tab Navigation (for sections) */
-  .tab-nav {
-    display: flex; gap: 4px; margin-bottom: 24px;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 4px; width: fit-content;
-  }
-  .tab-btn {
-    padding: 10px 22px; border-radius: 8px; font-size: 14px; font-weight: 500;
-    border: none; background: transparent; cursor: pointer; transition: all 0.2s;
-    color: var(--text-secondary); display: flex; align-items: center; gap: 6px;
-  }
-  .tab-btn:hover { background: var(--bg); color: var(--text); }
-  .tab-btn.active { background: var(--primary); color: white; }
-  .tab-btn .tab-count {
-    font-size: 11px; padding: 1px 7px; border-radius: 10px; background: rgba(255,255,255,0.2);
-  }
+/* ====== Header ====== */
+.header {
+  background: var(--surface);
+  border-bottom: 2px solid var(--primary);
+  padding: 28px 36px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.logo { display: flex; align-items: center; gap: 14px; }
+.logo-icon {
+  width: 48px; height: 48px; border-radius: var(--radius);
+  background: var(--primary);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 22px; flex-shrink: 0;
+}
+.logo h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+.logo p {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.header-stats { display: flex; gap: 28px; }
+.stat { text-align: center; }
+.stat-num {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+.header-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.action-btn {
+  padding: 7px 16px;
+  border-radius: var(--radius);
+  font-size: 12.5px;
+  font-weight: 600;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex; align-items: center; gap: 5px;
+  letter-spacing: 0.2px;
+}
+.action-btn:hover { border-color: var(--primary); color: var(--primary); }
+.action-btn.primary { background: var(--primary); color: white; border-color: var(--primary); }
+.action-btn.primary:hover { opacity: 0.92; }
+.action-btn.success { background: var(--success); color: white; border-color: var(--success); }
+.lock-header-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius);
+  font-size: 12px;
+  font-weight: 600;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex; align-items: center; gap: 5px;
+  color: var(--text-secondary);
+}
+.lock-header-btn:hover { border-color: var(--reading-color); color: var(--reading-color); }
 
-  .section { margin-bottom: 40px; }
-  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-  .section-title { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 600; }
-  .section-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
-  .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+.search-bar { position: relative; max-width: 520px; width: 100%; }
+.search-bar input {
+  width: 100%;
+  padding: 11px 16px 11px 44px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  background: var(--bg);
+  outline: none;
+  transition: border-color 0.15s;
+  font-family: inherit;
+}
+.search-bar input:focus { border-color: var(--primary); }
+.search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 15px; }
 
-  .quick-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
-  .quick-btn {
-    padding: 8px 18px; border-radius: 50px; font-size: 13px; font-weight: 500;
-    border: 1px solid var(--border); background: var(--surface); cursor: pointer; transition: all 0.2s;
-  }
-  .quick-btn:hover { border-color: var(--primary); color: var(--primary); }
-  .quick-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+/* ====== Bookmark Bar ====== */
+.bookmark-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-light);
+  padding: 10px 36px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+}
+.bookmark-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; white-space: nowrap; }
+.bookmark-item {
+  padding: 5px 14px;
+  border-radius: var(--radius);
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--bg);
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.bookmark-item:hover { border-color: var(--border); color: var(--text); }
+.bookmark-item.reading-active { background: var(--primary); color: white; border-color: var(--primary); font-weight: 600; }
 
-  .categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px; }
+/* ====== Main Content ====== */
+.main {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 36px 24px;
+  position: relative;
+  z-index: 1;
+}
 
-  /* Cards */
-  .card {
-    background: var(--surface); border: 1px solid var(--border-light);
-    border-radius: var(--radius); overflow: hidden; transition: all 0.2s; cursor: pointer;
-  }
-  .card:hover { border-color: var(--primary); box-shadow: 0 4px 12px rgba(79,70,229,0.08); transform: translateY(-2px); }
-  .card-header { padding: 20px 24px 16px; border-bottom: 1px solid var(--border-light); }
-  .card-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-  .card-title { font-size: 16px; font-weight: 600; }
-  .card-count { padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; }
-  .card-desc { font-size: 13px; color: var(--text-secondary); }
-  .card-body { padding: 16px 24px 20px; }
+/* ====== Tab Navigation (Underline Style - LitHub) ====== */
+.tab-nav {
+  display: flex;
+  gap: 0;
+  margin-bottom: 32px;
+  border-bottom: 2px solid var(--border);
+  width: 100%;
+}
+.tab-btn {
+  padding: 12px 22px;
+  border-radius: 0;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  font-family: "Playfair Display", "Noto Serif SC", Georgia, serif;
+  letter-spacing: 0.3px;
+}
+.tab-btn:hover { color: var(--text); background: transparent; }
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  background: transparent;
+}
+.tab-btn .tab-count {
+  font-size: 11px;
+  font-family: -apple-system, sans-serif;
+  font-weight: 600;
+  opacity: 0.6;
+}
 
-  /* Product List Items */
-  .product-list { list-style: none; }
-  .product-item {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 0; border-bottom: 1px solid var(--border-light);
-    font-size: 14px; gap: 12px;
-  }
-  .product-item:last-child { border-bottom: none; }
-  .product-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
-  .product-name { font-weight: 500; }
-  .product-tag { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; flex-shrink: 0; }
-  .tag-cn { background: #FEF3C7; color: #92400E; }
-  .tag-overseas { background: #DBEAFE; color: #1E40AF; }
-  .product-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-  .product-meta { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+/* ====== Section ====== */
+.section { margin-bottom: 40px; }
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.section-title {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.2px;
+}
+.section-icon {
+  width: 34px; height: 34px;
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+}
+.badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: var(--radius);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
 
-  /* Open Button */
-  .open-btn {
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500;
-    background: var(--primary-light); color: var(--primary);
-    border: 1px solid rgba(79,70,229,0.2); cursor: pointer;
-    transition: all 0.2s; text-decoration: none; white-space: nowrap;
-  }
-  .open-btn:hover { background: var(--primary); color: white; }
-  .open-btn .btn-icon { font-size: 13px; }
+.quick-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.quick-btn {
+  padding: 7px 16px;
+  border-radius: var(--radius);
+  font-size: 12.5px;
+  font-weight: 600;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.2px;
+}
+.quick-btn:hover { border-color: var(--primary); color: var(--primary); }
+.quick-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-  .card-content { display: none; }
-  .card-content.active { display: block; }
-  .expand-hint { font-size: 12px; color: var(--primary); margin-top: 8px; cursor: pointer; }
+.categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 20px; }
 
-  .batch-btn {
-    padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
-    background: white; border: 1px solid var(--border); cursor: pointer;
-    transition: all 0.2s; display: inline-flex; align-items: center; gap: 4px;
-  }
-  .batch-btn:hover { border-color: var(--primary); color: var(--primary); }
-  .batch-btn.primary { background: var(--primary); color: white; border-color: var(--primary); }
+/* ====== CARDS (LitHub style: sharp, clean, with left border accent) ====== */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all 0.2s;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+}
+.card:hover {
+  border-left-color: var(--primary);
+  box-shadow: 0 2px 12px rgba(139,37,0,0.08);
+}
+.card-header {
+  padding: 22px 26px 16px;
+  border-bottom: 1px solid var(--border-light);
+  background: linear-gradient(135deg, var(--surface), var(--bg));
+}
+.card-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.2px;
+}
+.card-count {
+  padding: 2px 10px;
+  border-radius: var(--radius);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.card-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.expand-hint {
+  font-size: 12px;
+  color: var(--primary);
+  margin-top: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
 
-  /* ====== Reading Zone Styles ====== */
-  .reading-grid { display: flex; flex-direction: column; gap: 16px; }
+/* ====== Product Items (New layout: icon + info + summary) ====== */
+.product-list { list-style: none; padding: 8px 0; }
+.product-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-light);
+  gap: 16px;
+  transition: background 0.15s;
+}
+.product-item:last-child { border-bottom: none; }
+.product-item:hover { background: var(--primary-fade); }
+.product-left { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+.product-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.product-name {
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--text);
+  letter-spacing: -0.2px;
+}
+.product-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+.tag-cn { background: #FEF3C7; color: #92400E; }
+.tag-overseas { background: #DBEAFE; color: #1E40AF; }
+.product-summary {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-top: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.product-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+  justify-content: center;
+}
+.product-meta {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-weight: 500;
+}
+.open-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 16px;
+  border-radius: var(--radius);
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  font-size: 10.5px;
+}
+.open-btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+.open-btn .btn-icon { font-size: 13px; }
 
-  .reading-card {
-    background: var(--surface); border: 1px solid var(--border-light);
-    border-radius: var(--radius); padding: 20px 24px;
-    display: flex; gap: 20px; transition: all 0.25s;
-    border-left: 4px solid transparent;
-  }
-  .reading-card:hover {
-    border-left-color: var(--reading-color);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.06); transform: translateX(4px);
-  }
-  .reading-rank {
-    font-size: 24px; font-weight: 700; color: var(--border);
-    min-width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .reading-body { flex: 1; min-width: 0; }
-  .reading-title {
-    font-size: 15px; font-weight: 600; margin-bottom: 6px;
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  }
-  .reading-title a {
-    color: var(--text); text-decoration: none; transition: color 0.2s;
-  }
-  .reading-title a:hover { color: var(--primary); }
-  .reading-source {
-    font-size: 12px; color: var(--reading-color); font-weight: 500;
-    background: var(--reading-light); padding: 2px 10px; border-radius: 20px;
-  }
-  .reading-meta {
-    display: flex; align-items: center; gap: 12px; margin-bottom: 8px;
-    font-size: 12px; color: var(--text-muted); flex-wrap: wrap;
-  }
-  .reading-tag {
-    display: inline-block; padding: 1px 8px; border-radius: 4px;
-    font-size: 11px; font-weight: 500; background: var(--bg); color: var(--text-secondary);
-  }
-  .reading-summary {
-    font-size: 13px; color: var(--text-secondary); line-height: 1.7;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-  }
-  .reading-actions {
-    display: flex; flex-direction: column; align-items: center; gap: 8px; flex-shrink: 0; justify-content: center;
-  }
-  .read-btn {
-    padding: 8px 18px; border-radius: 50px; font-size: 13px; font-weight: 600;
-    background: var(--primary); color: white; border: none; cursor: pointer;
-    transition: all 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
-    white-space: nowrap;
-  }
-  .read-btn:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(79,70,229,0.3); }
-  .status-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-  }
-  .status-unread { background: var(--reading-color); }
-  .status-read { background: var(--success); }
-  .status-dot[title] { cursor: help; }
+.card-content { display: none; }
+.card-content.active { display: block; animation: slideDown 0.25s ease; }
+@keyframes slideDown { from { opacity: 0; max-height: 0; } to { opacity: 1; max-height: 2000px; } }
 
-  /* AI Deep Analysis Panel */
-  .ai-summary-btn {
-    padding: 6px 14px; border-radius: 50px; font-size: 12px; font-weight: 600;
-    background: linear-gradient(135deg, #4F46E5, #7C3AED); color: white;
-    border: none; cursor: pointer; transition: all 0.2s;
-    display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;
-  }
-  .ai-summary-btn:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(79,70,229,0.35); }
-  .ai-summary-btn.active { background: linear-gradient(135deg, #059669, #10B981); }
-  .ai-summary-btn.loading { opacity: 0.7; pointer-events: none; }
+.batch-btn {
+  padding: 5px 14px;
+  border-radius: var(--radius);
+  font-size: 12px;
+  font-weight: 600;
+  background: white;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.batch-btn:hover { border-color: var(--primary); color: var(--primary); }
+.batch-btn.primary { background: var(--primary); color: white; border-color: var(--primary); }
 
-  .ai-panel {
-    display: none; margin-top: 14px;
-    border-radius: 12px; overflow: hidden;
-    background: #fff; border: 1px solid rgba(79,70,229,0.15);
-    box-shadow: 0 4px 20px rgba(79,70,229,0.08);
-  }
-  .ai-panel.show { display: block; animation: fadeSlideIn 0.35s ease; }
-  @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+/* ====== Reading Zone Styles ====== */
+.reading-grid { display: flex; flex-direction: column; gap: 16px; }
 
-  /* AI Panel Header */
-  .ai-panel-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 18px; background: linear-gradient(135deg, #4F46E5, #7C3AED);
-    color: white; cursor: pointer; user-select: none;
-  }
-  .ai-panel-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
-  .ai-panel-badge {
-    font-size: 10px; padding: 2px 8px; border-radius: 10px;
-    background: rgba(255,255,255,0.2); font-weight: 500;
-  }
+.reading-card {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  display: flex;
+  gap: 24px;
+  transition: all 0.25s;
+  border-left: 3px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+.reading-card::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--primary-fade), transparent);
+  pointer-events: none;
+}
+.reading-card:hover {
+  border-left-color: var(--reading-color);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  transform: translateX(3px);
+}
+.reading-rank {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--border);
+  min-width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.reading-body { flex: 1; min-width: 0; }
+.reading-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-family: "Playfair Display", "Noto Serif SC", Georgia, serif;
+}
+.reading-title a {
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.15s;
+  letter-spacing: -0.2px;
+}
+.reading-title a:hover { color: var(--primary); }
+.reading-source {
+  font-size: 11px;
+  color: white;
+  font-weight: 600;
+  background: var(--reading-color);
+  padding: 2px 10px;
+  border-radius: var(--radius);
+  letter-spacing: 0.2px;
+}
+.reading-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+.reading-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius);
+  font-size: 10.5px;
+  font-weight: 600;
+  background: var(--bg);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.reading-summary {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  /* Show full summary by default in new design */
+  padding: 12px 16px;
+  background: linear-gradient(135deg, var(--bg), var(--primary-light));
+  border-left: 2px solid var(--primary);
+  border-radius: var(--radius-sm);
+  margin-top: 10px;
+  font-style: italic;
+}
+.reading-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  justify-content: center;
+}
+.read-btn {
+  padding: 8px 20px;
+  border-radius: var(--radius);
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 5px;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 10.5px;
+}
+.read-btn:hover { background: var(--primary-dark); transform: translateX(2px); }
+.status-dot { width: 10px; height: 10px; border-radius: 50%; }
+.status-unread { background: var(--reading-color); }
+.status-read { background: var(--success); }
+.status-dot[title] { cursor: help; }
 
-  /* AI Messages Area */
-  .ai-messages {
-    padding: 16px 18px; max-height: 420px; overflow-y: auto;
-    display: flex; flex-direction: column; gap: 12px;
-    background: linear-gradient(180deg, #FAFBFF, #fff);
-  }
-  .ai-messages::-webkit-scrollbar { width: 4px; }
-  .ai-messages::-webkit-scrollbar-thumb { background: rgba(79,70,229,0.2); border-radius: 4px; }
+/* ====== AI Panel ====== */
+.ai-summary-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius);
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex; align-items: center; gap: 4px;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+.ai-summary-btn:hover { background: var(--primary-dark); transform: scale(1.03); }
+.ai-summary-btn.active { background: var(--success); }
+.ai-summary-btn.loading { opacity: 0.7; pointer-events: none; }
 
-  /* Message Bubbles */
-  .ai-msg { display: flex; gap: 10px; animation: msgIn 0.3s ease; }
-  @keyframes msgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-  .ai-msg-avatar {
-    width: 28px; height: 28px; border-radius: 8px; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center; font-size: 14px;
-  }
-  .ai-msg-avatar.ai { background: linear-gradient(135deg, #4F46E5, #7C3AED); color: white; }
-  .ai-msg-avatar.user { background: var(--bg); color: var(--text-secondary); font-size: 12px; font-weight: 600; }
-  .ai-msg-body { flex: 1; min-width: 0; }
-  .ai-msg-name { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 3px; }
-  .ai-msg-text {
-    font-size: 13px; line-height: 1.8; color: var(--text);
-    padding: 10px 14px; border-radius: 10px;
-  }
-  .ai-msg.ai-assistant .ai-msg-text { background: white; border: 1px solid var(--border-light); }
-  .ai-msg.user-msg .ai-msg-text { background: var(--primary); color: white; margin-left: 24px; }
+.ai-panel {
+  display: none;
+  margin-top: 16px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  box-shadow: 0 4px 20px rgba(139,37,0,0.06);
+}
+.ai-panel.show { display: block; animation: fadeSlideIn 0.3s ease; }
+@keyframes fadeSlideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* Rich text in AI messages */
-  .ai-msg-text h4 { font-size: 13px; font-weight: 700; color: var(--primary); margin: 10px 0 6px; }
-  .ai-msg-text h4:first-child { margin-top: 0; }
-  .ai-msg-text p { margin-bottom: 6px; }
-  .ai-msg-text p:last-child { margin-bottom: 0; }
-  .ai-msg-text ul, .ai-msg-text ol { margin: 6px 0; padding-left: 18px; }
-  .ai-msg-text li { margin-bottom: 3px; line-height: 1.7; }
-  .ai-msg-text strong { color: var(--text); }
-  .ai-msg-text em { color: var(--reading-color); font-style: normal; font-weight: 500; }
-  .ai-msg-text blockquote {
-    border-left: 3px solid var(--primary); padding: 6px 12px; margin: 8px 0;
-    background: var(--primary-light); border-radius: 0 6px 6px 0; font-size: 12px; color: var(--text-secondary);
-  }
-  .ai-msg-divider {
-    border: none; border-top: 1px dashed var(--border-light); margin: 8px 0;
-  }
-  .ai-tag-inline {
-    display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 11px; font-weight: 500;
-    background: var(--bg); color: var(--text-secondary); margin: 1px;
-  }
+.ai-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: var(--primary);
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  font-size: 13px;
+}
+.ai-panel-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+.ai-panel-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: var(--radius);
+  background: rgba(255,255,255,0.2);
+  font-weight: 600;
+}
 
-  /* Quick action chips */
-  .ai-quick-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .ai-chip {
-    padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: 500;
-    background: var(--bg); color: var(--text-secondary); border: 1px solid var(--border-light);
-    cursor: pointer; transition: all 0.15s;
-  }
-  .ai-chip:hover { background: var(--primary); color: white; border-color: var(--primary); }
+.ai-messages {
+  padding: 16px 18px;
+  max-height: 420px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: linear-gradient(180deg, #FFFCF8, #fff);
+}
+.ai-messages::-webkit-scrollbar { width: 4px; }
+.ai-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-  /* AI Input Area */
-  .ai-input-area {
-    padding: 12px 16px; border-top: 1px solid var(--border-light);
-    background: white; display: flex; gap: 8px; align-items: flex-end;
-  }
-  .ai-input-field {
-    flex: 1; padding: 8px 14px; border: 1px solid var(--border);
-    border-radius: 20px; font-size: 13px; outline: none; resize: none;
-    max-height: 80px; min-height: 36px; line-height: 1.4;
-    font-family: inherit; background: var(--bg);
-  }
-  .ai-input-field:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79,70,229,0.08); }
-  .ai-send-btn {
-    width: 34px; height: 34px; border-radius: 50%; border: none;
-    background: linear-gradient(135deg, #4F46E5, #7C3AED); color: white;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    font-size: 14px; transition: all 0.2s; flex-shrink: 0;
-  }
-  .ai-send-btn:hover { transform: scale(1.08); }
-  .ai-send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.ai-msg { display: flex; gap: 10px; animation: msgIn 0.25s ease; }
+@keyframes msgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.ai-msg-avatar {
+  width: 28px; height: 28px; border-radius: var(--radius); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 14px;
+}
+.ai-msg-avatar.ai { background: var(--primary); color: white; }
+.ai-msg-avatar.user { background: var(--bg); color: var(--text-secondary); font-size: 12px; font-weight: 700; }
+.ai-msg-body { flex: 1; min-width: 0; }
+.ai-msg-name { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 3px; }
+.ai-msg-text {
+  font-size: 13px; line-height: 1.75; color: var(--text);
+  padding: 10px 14px; border-radius: var(--radius);
+}
+.ai-msg.ai-assistant .ai-msg-text { background: var(--bg); border: 1px solid var(--border-light); }
+.ai-msg.user-msg .ai-msg-text { background: var(--primary); color: white; margin-left: 24px; }
 
-  /* Loading indicator */
-  .ai-typing {
-    display: flex; gap: 4px; padding: 8px 14px; align-items: center;
-  }
-  .ai-typing-dot {
-    width: 6px; height: 6px; border-radius: 50%; background: var(--primary);
-    animation: dotBounce 1.2s infinite;
-  }
-  .ai-typing-dot:nth-child(2) { animation-delay: 0.15s; }
-  .ai-typing-dot:nth-child(3) { animation-delay: 0.3s; }
-  @keyframes dotBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+.ai-msg-text h4 { font-size: 13px; font-weight: 700; color: var(--primary); margin: 10px 0 6px; }
+.ai-msg-text h4:first-child { margin-top: 0; }
+.ai-msg-text p { margin-bottom: 6px; }
+.ai-msg-text p:last-child { margin-bottom: 0; }
+.ai-msg-text ul, .ai-msg-text ol { margin: 6px 0; padding-left: 18px; }
+.ai-msg-text li { margin-bottom: 3px; line-height: 1.7; }
+.ai-msg-text strong { color: var(--text); }
+.ai-msg-text em { color: var(--reading-color); font-style: normal; font-weight: 600; }
+.ai-msg-text blockquote {
+  border-left: 3px solid var(--primary); padding: 6px 12px; margin: 8px 0;
+  background: var(--primary-light); border-radius: 0 var(--radius) var(--radius) 0; font-size: 12px; color: var(--text-secondary);
+}
+.ai-msg-divider { border: none; border-top: 1px dashed var(--border-light); margin: 8px 0; }
+.ai-tag-inline {
+  display: inline-block; padding: 2px 8px; border-radius: var(--radius);
+  font-size: 11px; font-weight: 600; background: var(--bg); color: var(--text-secondary); margin: 1px;
+}
 
-  /* Reading Category Colors */
-  /* Work Area categories */
-  .cat-literature .reading-card { border-left-color: #8B5CF6; }
-  .cat-philosophy .reading-card { border-left-color: #F59E0B; }
-  .cat-nonfiction .reading-card { border-left-color: #3B82F6; }
-  .cat-others .reading-card { border-left-color: #6B7280; }
-  /* Writing Area categories */
-  .cat-essays .reading-card { border-left-color: #EC4899; }
-  .cat-novels .reading-card { border-left-color: #14B8A6; }
-  .casual-notes .reading-card { border-left-color: #059669; }
+.ai-quick-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.ai-chip {
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--bg);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ai-chip:hover { background: var(--primary); color: white; border-color: var(--primary); }
 
-  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
-  .empty-state-icon { font-size: 48px; margin-bottom: 16px; }
+.ai-input-area {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-light);
+  background: white;
+  display: flex; gap: 8px; align-items: flex-end;
+}
+.ai-input-field {
+  flex: 1; padding: 8px 14px; border: 1.5px solid var(--border);
+  border-radius: var(--radius); font-size: 13px; outline: none; resize: none;
+  max-height: 80px; min-height: 36px; line-height: 1.4;
+  font-family: inherit; background: var(--bg);
+}
+.ai-input-field:focus { border-color: var(--primary); }
+.ai-send-btn {
+  width: 34px; height: 34px; border-radius: var(--radius); border: none;
+  background: var(--primary); color: white;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; transition: all 0.15s; flex-shrink: 0;
+}
+.ai-send-btn:hover { background: var(--primary-dark); transform: scale(1.05); }
+.ai-send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-  .footer { text-align: center; padding: 32px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border-light); margin-top: 40px; }
+.ai-typing { display: flex; gap: 4px; padding: 8px 14px; align-items: center; }
+.ai-typing-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--primary);
+  animation: dotBounce 1.2s infinite;
+}
+.ai-typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.ai-typing-dot:nth-child(3) { animation-delay: 0.3s; }
+@keyframes dotBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
 
-  .cat-work-area .section-icon { background: #EEF2FF; color: var(--primary); }
-  .cat-reading-area .section-icon { background: var(--reading-light); color: var(--reading-color); }
-  .cat-writing-area .section-icon { background: #FDF2F8; color: #EC4899; }
-  .cat-others-area .section-icon { background: #F3F4F6; color: #6B7280; }
-  .count-blue { background: #EEF2FF; color: var(--primary); }
-  .count-green { background: #ECFDF5; color: #059669; }
-  .count-red { background: var(--reading-light); color: var(--reading-color); }
+/* Category accent colors */
+.cat-literature .reading-card { border-left-color: #7C3AED; }
+.cat-philosophy .reading-card { border-left-color: var(--accent-gold); }
+.cat-nonfiction .reading-card { border-left-color: var(--accent-blue); }
+.cat-others .reading-card { border-left-color: #6B7280; }
+.cat-essays .reading-card { border-left-color: #DB2777; }
+.cat-novels .reading-card { border-left-color: #059669; }
+.casual-notes .reading-card { border-left-color: var(--success); }
 
-  /* Toast */
-  .toast {
-    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-    padding: 12px 28px; border-radius: 50px; background: #111827; color: white;
-    font-size: 14px; font-weight: 500; z-index: 99999; opacity: 0;
-    transition: opacity 0.3s; pointer-events: none;
-  }
-  .toast.show { opacity: 1; }
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.empty-state-icon { font-size: 48px; margin-bottom: 16px; }
 
-  @media (max-width: 768px) {
-    .header { padding: 16px 20px; }
-    .ai-banner { margin: 16px 16px 0; padding: 16px 20px; }
-    .bookmark-bar { padding: 10px 16px; }
-    .main { padding: 20px 16px; }
-    .categories-grid { grid-template-columns: 1fr; }
-    .reading-card { flex-direction: column; gap: 12px; }
-    .reading-actions { flex-direction: row; justify-content: flex-end; }
-    .tab-nav { width: 100%; overflow-x: auto; }
-    .product-item { flex-wrap: wrap; }
-    .open-btn { margin-left: auto; }
-  }
+.footer {
+  text-align: center;
+  padding: 36px;
+  color: var(--text-muted);
+  font-size: 12px;
+  border-top: 1px solid var(--border-light);
+  margin-top: 48px;
+  letter-spacing: 0.3px;
+}
 
-  /* ====== Password Lock Screen ====== */
-  .lock-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-    z-index: 99999; display: flex; align-items: center; justify-content: center;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-  }
-  .lock-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-  .lock-card {
-    background: rgba(255,255,255,0.08); backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.12); border-radius: 20px;
-    padding: 48px 40px; text-align: center; max-width: 380px; width: 90%;
-    animation: lockFadeIn 0.6s ease;
-  }
-  @keyframes lockFadeIn {
-    from { opacity: 0; transform: translateY(20px) scale(0.97); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-  .lock-icon {
-    width: 64px; height: 64px; border-radius: 16px;
-    background: linear-gradient(135deg, #4F46E5, #7C3AED);
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 20px; font-size: 28px; color: white;
-  }
-  .lock-title { color: white; font-size: 20px; font-weight: 600; margin-bottom: 8px; }
-  .lock-subtitle { color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 28px; }
-  .lock-input-wrap { position: relative; margin-bottom: 16px; }
-  .lock-input {
-    width: 100%; padding: 14px 44px 14px 16px; border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.06);
-    color: white; font-size: 16px; outline: none; transition: all 0.2s;
-  }
-  .lock-input:focus { border-color: rgba(79,70,229,0.6); box-shadow: 0 0 0 3px rgba(79,70,229,0.2); }
-  .lock-input::placeholder { color: rgba(255,255,255,0.35); }
-  .lock-btn {
-    position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
-    width: 36px; height: 36px; border-radius: 10px;
-    background: linear-gradient(135deg, #4F46E5, #7C3AED);
-    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
-    color: white; font-size: 16px; transition: all 0.2s;
-  }
-  .lock-btn:hover { transform: translateY(-50%) scale(1.05); }
-  .lock-error { color: #F87171; font-size: 13px; min-height: 20px; margin-top: 10px; opacity: 0; transition: opacity 0.3s; }
-  .lock-error.show { opacity: 1; }
-  .lock-hint { color: rgba(255,255,255,0.3); font-size: 11px; margin-top: 20px; }
+.cat-work-area .section-icon { background: var(--primary-light); color: var(--primary); }
+.cat-reading-area .section-icon { background: var(--reading-light); color: var(--reading-color); }
+.cat-writing-area .section-icon { background: #FDF2F8; color: #EC4899; }
+.cat-others-area .section-icon { background: #F3F4F6; color: #6B7280; }
+.count-blue { background: #EBE8FF; color: #5B21B6; }
+.count-green { background: #DCFCE7; color: #166534; }
+.count-red { background: var(--reading-light); color: var(--reading-color); }
 
-  /* Lock button in header */
-  .lock-header-btn {
-    padding: 6px 14px; border-radius: 50px; font-size: 12px; font-weight: 500;
-    border: 1px solid var(--border); background: var(--surface); cursor: pointer;
-    transition: all 0.2s; display: flex; align-items: center; gap: 5px; color: var(--text-secondary);
-  }
-  .lock-header-btn:hover { border-color: var(--reading-color); color: var(--reading-color); }
+/* Toast */
+.toast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  padding: 12px 28px; border-radius: var(--radius); background: var(--text); color: white;
+  font-size: 14px; font-weight: 500; z-index: 99999; opacity: 0;
+  transition: opacity 0.3s; pointer-events: none;
+}
+.toast.show { opacity: 1; }
 
-  /* Main content wrapper - hidden when locked */
-  .main-content-wrapper { transition: filter 0.3s ease; }
-  
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-8px); }
-    40%, 80% { transform: translateX(8px); }
-  }
-  .shake { animation: shake 0.4s ease; }
-  .main-content-wrapper.blurred { filter: blur(8px); pointer-events: none; }
+/* ====== AI Banner (Bottom) ====== */
+.ai-banner {
+  background: var(--primary);
+  margin: 32px 0 0; border-radius: var(--radius); padding: 22px 28px;
+  color: white; display: flex; align-items: center; justify-content: space-between;
+  gap: 18px; flex-wrap: wrap;
+}
+.ai-banner-left { display: flex; align-items: center; gap: 14px; }
+.ai-avatar {
+  width: 48px; height: 48px; border-radius: var(--radius);
+  background: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;
+}
+.ai-text h3 { font-size: 15px; font-weight: 700; margin-bottom: 2px; font-family: "Playfair Display", Georgia, serif; }
+.ai-text p { font-size: 12.5px; opacity: 0.85; }
+.ai-input-wrap { display: flex; gap: 8px; width: 100%; max-width: 440px; margin-top: 4px; }
+.ai-input {
+  flex: 1; padding: 10px 16px; border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.12); color: white; font-size: 14px; outline: none;
+}
+.ai-input::placeholder { color: rgba(255,255,255,0.55); }
+.ai-send {
+  padding: 10px 20px; border-radius: var(--radius); background: white; color: var(--primary);
+  border: none; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.15s;
+  text-transform: uppercase; letter-spacing: 0.5px; font-size: 11px;
+}
+.ai-send:hover { transform: scale(1.03); }
 
+/* ====== Password Lock Screen ====== */
+.lock-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(160deg, #1a0a00 0%, #3d1800 40%, #5c2600 70%, #8B2500 100%);
+  z-index: 99999; display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.lock-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.lock-card {
+  background: rgba(255,255,255,0.95); backdrop-filter: blur(20px);
+  border: 1px solid rgba(139,37,0,0.15); border-radius: 6px;
+  padding: 48px 44px; text-align: center; max-width: 400px; width: 90%;
+  animation: lockFadeIn 0.6s ease;
+}
+@keyframes lockFadeIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.lock-icon {
+  width: 64px; height: 64px; border-radius: var(--radius);
+  background: var(--primary);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; font-size: 28px; color: white;
+}
+.lock-title {
+  color: var(--text); font-size: 22px; font-weight: 700; margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+.lock-subtitle { color: var(--text-muted); font-size: 13px; margin-bottom: 28px; }
+.lock-input-wrap { position: relative; margin-bottom: 16px; }
+.lock-input {
+  width: 100%; padding: 14px 46px 14px 16px; border-radius: var(--radius);
+  border: 2px solid var(--border); background: var(--bg);
+  color: var(--text); font-size: 16px; outline: none; transition: border-color 0.15s;
+  font-family: inherit;
+}
+.lock-input:focus { border-color: var(--primary); }
+.lock-input::placeholder { color: var(--text-muted); }
+.lock-btn {
+  position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+  width: 38px; height: 38px; border-radius: var(--radius);
+  background: var(--primary); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 16px; transition: all 0.15s;
+}
+.lock-btn:hover { background: var(--primary-dark); transform: translateY(-50%) scale(1.03); }
+.lock-error { color: var(--reading-color); font-size: 13px; min-height: 20px; margin-top: 10px; opacity: 0; transition: opacity 0.3s; font-weight: 600; }
+.lock-error.show { opacity: 1; }
+.lock-hint { color: var(--text-muted); font-size: 11px; margin-top: 20px; }
+
+.main-content-wrapper { transition: filter 0.3s ease; }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+.shake { animation: shake 0.4s ease; }
+.main-content-wrapper.blurred { filter: blur(8px); pointer-events: none; }
+
+/* ====== Responsive ====== */
+@media (max-width: 768px) {
+  .header { padding: 20px 18px; }
+  .ai-banner { margin: 18px 18px 0; padding: 18px 20px; }
+  .bookmark-bar { padding: 10px 16px; }
+  .main { padding: 24px 16px; }
+  .categories-grid { grid-template-columns: 1fr; }
+  .reading-card { flex-direction: column; gap: 14px; padding: 18px 20px; }
+  .reading-actions { flex-direction: row; justify-content: flex-end; }
+  .tab-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .product-item { flex-wrap: wrap; padding: 12px 14px; }
+  .open-btn { margin-left: auto; }
+  .header-stats { gap: 16px; }
+  .stat-num { font-size: 22px; }
+  .logo h1 { font-size: 19px; }
+}
 </style>
 </head>
 <body>
+
 <!-- Password Lock Screen -->
 <div class="lock-overlay" id="lockOverlay">
   <div class="lock-card">
-    <div class="lock-icon">🔐</div>
-    <div class="lock-title">私有知识库</div>
-    <div class="lock-subtitle">请输入访问密码以继续</div>
+    <div class="lock-icon">&#x1F510;</div>
+    <div class="lock-title">Private Knowledge Base</div>
+    <div class="lock-subtitle">Enter password to continue</div>
     <div class="lock-input-wrap">
-      <input type="password" class="lock-input" id="lockInput" placeholder="输入访问密码..." autocomplete="current-password" onkeydown="if(event.key==='Enter')checkPassword()">
-      <button class="lock-btn" onclick="checkPassword()">→</button>
+      <input type="password" class="lock-input" id="lockInput" placeholder="Enter access password..." autocomplete="current-password" onkeydown="if(event.key==='Enter')checkPassword()">
+      <button class="lock-btn" onclick="checkPassword()">&rarr;</button>
     </div>
-    <div class="lock-error" id="lockError">❌ 密码错误，请重试</div>
+    <div class="lock-error" id="lockError">&#x274C; Incorrect password, please try again</div>
   </div>
 </div>
 
-
 <div class="main-content-wrapper blurred">
+
 <!-- Top Notice -->
 <div class="top-notice" id="topNotice">
-  📍 当前为 <strong id="modeLabel">本地模式</strong> · <a href="javascript:void(0)" onclick="showDeployGuide()">点击了解如何部署到线上</a> → 获取固定访问地址
+  &#x1F4CD; Currently in <strong id="modeLabel">Local Mode</strong> &middot; <a href="javascript:void(0)" onclick="showDeployGuide()">Click to learn about online deployment</a> &rarr; Get a fixed URL
 </div>
 
 <!-- Header -->
 <div class="header">
   <div class="header-top">
     <div class="logo">
-      <div class="logo-icon">✨</div>
+      <div class="logo-icon">&#x2728;</div>
       <div>
         <h1>My Knowledge Base</h1>
-        <p>Work · Reading · Writing · Life</p>
+        <p>Work &middot; Reading &middot; Writing &middot; Life</p>
       </div>
     </div>
     <div class="header-stats" id="headerStats">
@@ -536,208 +901,200 @@
       <div class="stat"><div class="stat-num">4</div><div class="stat-label">Areas</div></div>
     </div>
     <div class="header-actions">
-    <button class="lock-header-btn" onclick="lockKB()" title="锁定知识库">🔒 锁定</button>
-      <button class="action-btn success" onclick="openInFinder()">📂 打开文件夹</button>
-      <button class="action-btn" onclick="copyLink()">📋 复制地址</button>
+      <button class="lock-header-btn" onclick="lockKB()" title="Lock KB">&#x1F512; Lock</button>
+      <button class="action-btn success" onclick="openInFinder()">&#x1F4C2; Open Folder</button>
+      <button class="action-btn" onclick="copyLink()">&#x1F4CB; Copy Link</button>
     </div>
   </div>
   <div class="search-bar">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="searchInput" placeholder="搜索产品、文章、标签、关键词..." oninput="onGlobalSearch()">
+    <span class="search-icon">&#x1F50D;</span>
+    <input type="text" id="searchInput" placeholder="Search products, articles, tags, keywords..." oninput="onGlobalSearch()">
   </div>
 </div>
 
 <!-- Bookmark Bar -->
 <div class="bookmark-bar" id="bookmarkBar">
-  <span class="bookmark-label">⌨️ 快捷入口</span>
-  <a class="bookmark-item" onclick="switchTab('work')" id="tabLinkWork">🔵 Work Area</a>
-  <a class="bookmark-item reading-active" onclick="switchTab('reading')" id="tabLinkReading">🔴 Reading Area</a>
-  <a class="bookmark-item" onclick="switchTab('writing')" id="tabLinkWriting">🩷 Writing Area</a>
-  <a class="bookmark-item" onclick="switchTab('others')" id="tabLinkOthers">⚪ Others</a>
+  <span class="bookmark-label">Quick Access</span>
+  <a class="bookmark-item" onclick="switchTab('work')" id="tabLinkWork">&#x1F535; Work Area</a>
+  <a class="bookmark-item reading-active" onclick="switchTab('reading')" id="tabLinkReading">&#x1F534; Reading Area</a>
+  <a class="bookmark-item" onclick="switchTab('writing')" id="tabLinkWriting">&#x1FA77; Writing Area</a>
+  <a class="bookmark-item" onclick="switchTab('others')" id="tabLinkOthers">&#x26AA; Others</a>
   <span style="width:1px;height:16px;background:var(--border-light);display:inline-block;vertical-align:middle;"></span>
-  <a class="bookmark-item" onclick="setReadingFilter('literature',this)">📖 Literature</a>
-  <a class="bookmark-item" onclick="setReadingFilter('philosophy',this)">🧠 Philosophy</a>
-  <a class="bookmark-item" onclick="document.getElementById('aiInput').focus(); document.getElementById('aiBanner').scrollIntoView({behavior:'smooth'})">❓ 问AI ↗</a>
+  <a class="bookmark-item" onclick="setReadingFilter('literature',this)">&#x1F4D6; Literature</a>
+  <a class="bookmark-item" onclick="setReadingFilter('philosophy',this)">&#x1F9E0; Philosophy</a>
+  <a class="bookmark-item" onclick="document.getElementById('aiInput').focus(); document.getElementById('aiBanner').scrollIntoView({behavior:'smooth'})">&#x2753; Ask AI &#x2197;</a>
 </div>
 
 <!-- Main -->
 <div class="main">
 
-  <!-- Tab Navigation - 4 Areas -->
+  <!-- Tab Navigation -->
   <div class="tab-nav" id="tabNav">
-    <button class="tab-btn active" onclick="switchTab('work', this)" data-tab="work">🔵 Work Area <span id="tabWorkCount">30</span></button>
-    <button class="tab-btn" onclick="switchTab('reading', this)" data-tab="reading">🔴 Reading Area <span id="tabReadingCount">1</span></button>
-    <button class="tab-btn" onclick="switchTab('writing', this)" data-tab="writing">🩷 Writing Area <span id="tabWritingCount">0</span></button>
-    <button class="tab-btn" onclick="switchTab('others', this)" data-tab="others">⚪ Others <span id="tabOthersCount">0</span></button>
+    <button class="tab-btn active" onclick="switchTab('work', this)" data-tab="work">&#x1F535; Work Area <span class="tab-count" id="tabWorkCount">30</span></button>
+    <button class="tab-btn" onclick="switchTab('reading', this)" data-tab="reading">&#x1F534; Reading Area <span class="tab-count" id="tabReadingCount">1</span></button>
+    <button class="tab-btn" onclick="switchTab('writing', this)" data-tab="writing">&#x1FA77; Writing Area <span class="tab-count" id="tabWritingCount">0</span></button>
+    <button class="tab-btn" onclick="switchTab('others', this)" data-tab="others">&#x26AA; Others <span class="tab-count" id="tabOthersCount">0</span></button>
   </div>
 
-  <!-- ====== AREA: Work Area (Product Research) ====== -->
-  <div class="tab-panel" id="panel-work" style="">
+  <!-- Work Area: Product Research -->
+  <div class="tab-panel" id="panel-work">
 
     <div class="quick-bar" id="quickBar">
-      <button class="quick-btn active" onclick="setFilter('all', this)">全部内容</button>
-      <button class="quick-btn" onclick="setFilter('overseas', this)">🌏 海外产品</button>
-      <button class="quick-btn" onclick="setFilter('domestic', this)">🇨🇳 国内产品</button>
-      <button class="quick-btn" onclick="setFilter('ai-tutor', this)">🤖 AI辅导类</button>
-      <button class="quick-btn" onclick="setFilter('adaptive', this)">🔄 自适应学习</button>
-      <button class="quick-btn" onclick="setFilter('language', this)">🗣️ 语言学习</button>
-      <button class="quick-btn" onclick="setFilter('k12', this)">📚 K12/学科</button>
+      <button class="quick-btn active" onclick="setFilter('all', this)">All</button>
+      <button class="quick-btn" onclick="setFilter('overseas', this)">&#x1F30F; Overseas</button>
+      <button class="quick-btn" onclick="setFilter('domestic', this)">&#x1F1E8;&#x1F1F3; Domestic</button>
+      <button class="quick-btn" onclick="setFilter('ai-tutor', this)">&#x1F916; AI Tutor</button>
+      <button class="quick-btn" onclick="setFilter('adaptive', this)">&#x1F504; Adaptive</button>
+      <button class="quick-btn" onclick="setFilter('language', this)">&#x1F4AC; Language</button>
+      <button class="quick-btn" onclick="setFilter('k12', this)">&#x1F4DA; K12</button>
     </div>
 
     <div class="section" id="workSection">
       <div class="section-header">
         <div class="section-title cat-work-area">
-          <div class="section-icon">🔵</div>
-          Work Area — Product Research
-          <span class="badge count-blue">30份报告</span>
+          <div class="section-icon">W</div>
+          Product Research
+          <span class="badge count-blue">30 Reports</span>
         </div>
       </div>
       <div class="categories-grid" id="cardsContainer"></div>
       <div class="empty-state" id="emptyState" style="display:none;">
-        <div class="empty-state-icon">🔍</div>
-        <p>没有找到匹配的内容</p>
-        <p style="font-size:13px;margin-top:4px;">试试其他关键词吧</p>
+        <div class="empty-state-icon">&#x1F50D;</div>
+        <p>No matching content found</p>
+        <p style="font-size:13px;margin-top:4px;">Try different keywords</p>
       </div>
     </div>
   </div>
 
-  <!-- ====== AREA: Reading Area ====== -->
+  <!-- Reading Area -->
   <div class="tab-panel" id="panel-reading" style="display:none;">
 
     <div class="quick-bar" id="readingQuickBar">
-      <button class="quick-btn active" onclick="setReadingFilter('all', this)">📚 All</button>
-      <button class="quick-btn" onclick="setReadingFilter('literature', this)">📖 Literature</button>
-      <button class="quick-btn" onclick="setReadingFilter('philosophy', this)">🧠 Philosophy</button>
-      <button class="quick-btn" onclick="setReadingFilter('nonfiction', this)">📰 Non-fiction</button>
-      <button class="quick-btn" onclick="setReadingFilter('others', this)">📌 Others</button>
-      <button class="quick-btn" onclick="setReadingFilter('unread', this)">🔴 Unread</button>
+      <button class="quick-btn active" onclick="setReadingFilter('all', this)">&#x1F4DA; All</button>
+      <button class="quick-btn" onclick="setReadingFilter('literature', this)">&#x1F4D6; Literature</button>
+      <button class="quick-btn" onclick="setReadingFilter('philosophy', this)">&#x1F9E0; Philosophy</button>
+      <button class="quick-btn" onclick="setReadingFilter('nonfiction', this)">&#x1F4F0; Non-fiction</button>
+      <button class="quick-btn" onclick="setReadingFilter('others', this)">&#x1F4CE; Others</button>
+      <button class="quick-btn" onclick="setReadingFilter('unread', this)">&#x1F534; Unread</button>
     </div>
 
     <div class="section" id="readingSection">
       <div class="section-header">
         <div class="section-title cat-reading-area">
-          <div class="section-icon">🔴</div>
-          Reading Area
-          <span class="badge count-red" id="readingBadgeCount">1 篇收藏</span>
+          <div class="section-icon">R</div>
+          Reading Collection
+          <span class="badge count-red" id="readingBadgeCount">1 Article</span>
         </div>
       </div>
-
       <div class="reading-grid" id="readingContainer"></div>
-
       <div class="empty-state" id="readingEmpty" style="display:none;">
-        <div class="empty-state-icon">📚</div>
-        <p>还没有收藏内容</p>
-        <p style="font-size:13px;margin-top:4px;">发链接给 AI："存一下这个链接 xxx"</p>
+        <div class="empty-state-icon">&#x1F4D6;</div>
+        <p>No collections yet</p>
+        <p style="font-size:13px;margin-top:4px;">Send me a link: "Save this: https://xxx"</p>
       </div>
     </div>
   </div>
 
-  <!-- ====== AREA: Writing Area ====== -->
+  <!-- Writing Area -->
   <div class="tab-panel" id="panel-writing" style="display:none;">
     <div class="quick-bar" id="writingQuickBar">
-      <button class="quick-btn active" onclick="setWritingFilter('all', this)">✏️ All</button>
-      <button class="quick-btn" onclick="setWritingFilter('essays', this)">📝 Essays</button>
-      <button class="quick-btn" onclick="setWritingFilter('novels', this)">📖 Novels</button>
-      <button class="quick-btn" onclick="setWritingFilter('casual', this)">📒 Casual Notes</button>
+      <button class="quick-btn active" onclick="setWritingFilter('all', this)">&#x270F; All</button>
+      <button class="quick-btn" onclick="setWritingFilter('essays', this)">&#x1F4DD; Essays</button>
+      <button class="quick-btn" onclick="setWritingFilter('novels', this)">&#x1F4D6; Novels</button>
+      <button class="quick-btn" onclick="setWritingFilter('casual', this)">&#x1F4D4; Notes</button>
     </div>
     <div class="section" id="writingSection">
       <div class="section-header">
         <div class="section-title cat-writing-area">
-          <div class="section-icon">🩷</div>
-          Writing Area
-          <span class="badge" id="writingBadgeCount" style="background:#FDF2F8;color:#EC4899;">0 篇</span>
+          <div class="section-icon">W</div>
+          Writing
+          <span class="badge" id="writingBadgeCount" style="background:#FDF2F8;color:#EC4899;">0</span>
         </div>
       </div>
       <div class="reading-grid" id="writingContainer"></div>
       <div class="empty-state" id="writingEmpty" style="display:none;">
-        <div class="empty-state-icon">✏️</div>
+        <div class="empty-state-icon">&#x270F;</div>
         <h3>Start Writing</h3>
-        <p>Your essays, novels, and casual notes will appear here.</p>
-        <p style="font-size:13px;margin-top:4px;color:var(--text-muted);">告诉 AI "写一篇..." 或 "记个笔记..." 即可添加</p>
+        <p>Your essays, novels, and notes will appear here.</p>
       </div>
     </div>
   </div>
 
-  <!-- ====== AREA: Others ====== -->
+  <!-- Others -->
   <div class="tab-panel" id="panel-others" style="display:none;">
     <div class="section" id="othersSection">
       <div class="section-header">
         <div class="section-title cat-others-area">
-          <div class="section-icon">⚪</div>
+          <div class="section-icon">O</div>
           Others
-          <span class="badge" id="othersBadgeCount" style="background:#F3F4F6;color:#6B7280;">0 项</span>
+          <span class="badge" id="othersBadgeCount" style="background:#F3F4F6;color:#6B7280;">0</span>
         </div>
       </div>
       <div class="reading-grid" id="othersContainer"></div>
       <div class="empty-state" id="othersEmpty" style="">
-        <div class="empty-state-icon">📌</div>
+        <div class="empty-state-icon">&#x1F4CE;</div>
         <h3>Others</h3>
-        <p>Miscellaneous content will appear here.</p>
-        <p style="font-size:13px;margin-top:4px;color:var(--text-muted);">其他类型的内容可以放在这里</p>
+        <p>Miscellaneous items will appear here.</p>
       </div>
     </div>
   </div>
 
-<!-- AI Assistant Banner (Bottom) -->
+<!-- AI Banner -->
 <div class="ai-banner" id="aiBanner">
   <div class="ai-banner-left">
-    <div class="ai-avatar">🤖</div>
+    <div class="ai-avatar">&#x1F916;</div>
     <div class="ai-text">
-      <h3>AI 知识助手</h3>
-      <p>直接提问，我会结合你的知识库内容回答你</p>
+      <h3>AI Research Assistant</h3>
+      <p>Ask anything about your knowledge base</p>
     </div>
   </div>
   <div class="ai-input-wrap">
-    <input class="ai-input" id="aiInput" placeholder="例如：帮我总结阅读专区里关于AI教育的所有文章..." onkeydown="if(event.key==='Enter')sendToAI()">
-    <button class="ai-send" onclick="sendToAI()">发送 →</button>
+    <input class="ai-input" id="aiInput" placeholder="e.g., Summarize all reports about adaptive learning..." onkeydown="if(event.key==='Enter')sendToAI()">
+    <button class="ai-send" onclick="sendToAI()">Send &rarr;</button>
   </div>
 </div>
 
 <div class="footer">
-  <p>My Knowledge Base — Work · Reading · Writing · Life · 最后更新 2026-04-30</p>
+  <p>My Knowledge Base &mdash; Work &middot; Reading &middot; Writing &middot; Life &mdash; Updated 2026-04-30</p>
 </div>
 
 <!-- Deploy Guide Modal -->
 <div id="deployModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:99999;justify-content:center;align-items:center;padding:20px;">
-  <div style="background:white;border-radius:16px;padding:32px;max-width:600px;width:100%;max-height:80vh;overflow-y:auto;">
-    <h2 style="font-size:20px;margin-bottom:16px;display:flex;align-items:center;gap:8px;">🚀 部署知识库到线上</h2>
+  <div style="background:white;border-radius:6px;padding:32px;max-width:600px;width:100%;max-height:80vh;overflow-y:auto;">
+    <h2 style="font-size:20px;margin-bottom:16px;display:flex;align-items:center;gap:8px;font-family:'Playfair Display',Georgia,serif;">&#x1F680; Deploy Online</h2>
     <div style="font-size:14px;line-height:1.8;color:var(--text-secondary);">
-      <p style="margin-bottom:12px;"><strong style="color:var(--text);">为什么需要线上部署？</strong></p>
-      <ul style="padding-left:20px;margin-bottom:16px;"><li>✅ 固定访问地址，任何设备都能打开</li><li>✅ 手机/平板随时查看</li><li>✅ 可分享给同事/朋友</li></ul>
-      <p style="margin-bottom:12px;"><strong style="color:var(--text);">推荐方案：</strong> GitHub Pages / Vercel / Netlify（均免费）</p>
-      <pre style="background:var(--bg);padding:16px;border-radius:8px;font-size:12px;overflow-x:auto;margin-bottom:16px;"># GitHub Pages 部署步骤
+      <p style="margin-bottom:12px;"><strong style="color:var(--text);">Why deploy?</strong></p>
+      <ul style="padding-left:20px;margin-bottom:16px;"><li>&#x2705; Fixed URL accessible anywhere</li><li>&#x2705; Mobile-friendly</li><li>&#x2705; Shareable</li></ul>
+      <p style="margin-bottom:12px;"><strong style="color:var(--text);">Recommended:</strong> GitHub Pages / Vercel / Netlify</p>
+      <pre style="background:var(--bg);padding:16px;border-radius:4px;font-size:12px;overflow-x:auto;margin-bottom:16px;border:1px solid var(--border);"># GitHub Pages
 cd knowledge-base && git init && git add .
-git commit -m "初始化"
-# 推送到 GitHub → Settings → Pages 启用即可
-# 地址: https://你的用户名.github.io/repo名/</pre>
-      <p style="font-size:13px;color:var(--text-muted);">💡 告诉我你的 GitHub 用户名，我帮你一键部署！</p>
+git commit -m "init"
+# Push to GitHub -> Settings -> Pages</pre>
+      <p style="font-size:13px;color:var(--text-muted);">&#x1F4A1; Tell me your GitHub username for one-click deploy!</p>
     </div>
     <div style="margin-top:20px;display:flex;gap:10px;justify-content:flex-end;">
-      <button onclick="closeDeployGuide()" style="padding:8px 24px;border-radius:50px;border:1px solid var(--border);background:white;cursor:pointer;font-size:14px;">关闭</button>
-      <button onclick="closeDeployGuide();startDeploy()" style="padding:8px 24px;border-radius:50px;background:var(--primary);color:white;border:none;cursor:pointer;font-size:14px;">帮我部署 →</button>
+      <button onclick="closeDeployGuide()" style="padding:8px 24px;border-radius:4px;border:1.5px solid var(--border);background:white;cursor:pointer;font-size:14px;font-weight:600;">Close</button>
+      <button onclick="closeDeployGuide();startDeploy()" style="padding:8px 24px;border-radius:4px;background:var(--primary);color:white;border:none;cursor:pointer;font-size:14px;font-weight:600;">Deploy &rarr;</button>
     </div>
   </div>
 </div>
 
-<!-- Add Reading Hint Toast Area -->
-<div id="addReadingToast" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:99998;justify-content:center;align-items:center;padding:20px;" onclick="if(event.target===this)this.style.display='none'">
-  <div style="background:white;border-radius:16px;padding:32px;max-width:480px;width:100%;text-align:center;" onclick="event.stopPropagation()">
-    <div style="font-size:48px;margin-bottom:16px;">📮</div>
-    <h3 style="font-size:18px;margin-bottom:12px;">添加新链接到阅读专区</h3>
+<div id="addReadingToast" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);z-index:99998;justify-content:center;align-items:center;padding:20px;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:white;border-radius:6px;padding:32px;max-width:480px;width:100%;text-align:center;" onclick="event.stopPropagation()">
+    <div style="font-size:48px;margin-bottom:16px;">&#x1F4EE;</div>
+    <h3 style="font-size:18px;margin-bottom:12px;font-family:'Playfair Display',Georgia,serif;">Add New Article</h3>
     <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:20px;">
-      直接在对话中告诉我：<br>
-      <code style="background:var(--bg);padding:4px 10px;border-radius:6px;display:inline-block;margin-top:8px;font-size:13px;">存一下这个链接：https://xxx</code><br>
-      或<br>
-      <code style="background:var(--bg);padding:4px 10px;border-radius:6px;display:inline-block;margin-top:8px;font-size:13px;">加入阅读库：标题 + 链接</code>
+      Just tell me:<br>
+      <code style="background:var(--bg);padding:4px 10px;border-radius:4px;display:inline-block;margin-top:8px;font-size:13px;border:1px solid var(--border);">Save this link: https://xxx</code><br>or<br>
+      <code style="background:var(--bg);padding:4px 10px;border-radius:4px;display:inline-block;margin-top:8px;font-size:13px;border:1px solid var(--border);">Add reading: Title + URL</code>
     </p>
-    <p style="font-size:13px;color:var(--primary);">我会自动抓取内容、分析归类、写入知识库 ✨</p>
-    <button onclick="document.getElementById('addReadingToast').style.display='none'" style="margin-top:20px;padding:10px 28px;border-radius:50px;background:var(--primary);color:white;border:none;cursor:pointer;font-size:14px;">知道了</button>
+    <button onclick="document.getElementById('addReadingToast').style.display='none'" style="margin-top:20px;padding:10px 28px;border-radius:4px;background:var(--primary);color:white;border:none;cursor:pointer;font-size:14px;font-weight:600;">Got it</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<script>
+
 // ============================================================
 // PASSWORD LOCK SYSTEM
 // ============================================================
@@ -768,7 +1125,7 @@ git commit -m "初始化"
     } else {
       errorEl.classList.add('show');
       input.value = '';
-      input.style.borderColor = '#F87171';
+      input.style.borderColor = '#C41E3A';
       input.classList.add('shake');
       setTimeout(function() { input.classList.remove('shake'); input.style.borderColor = ''; }, 500);
       setTimeout(function() { errorEl.classList.remove('show'); }, 2500);
@@ -810,72 +1167,28 @@ git commit -m "初始化"
   }
 })();
 
-// ============================================================
-// END PASSWORD LOCK
+// ============================================================ END PASSWORD LOCK
 // ============================================================
 
 // ============================================================
-// DATA: Products (Research)
+// DATA: Products (Research) WITH SUMMARIES
 // ============================================================
-const BASE_PATH = '工作相关/产品调研/';
-const products = [
-    { name: "ALEKS", file: "ALEKS-产品调研（202512）.pdf", region: "overseas", date: "2025-12", tags: ["自适应学习"], category: "adaptive", size: "6.5MB" },
-    { name: "ASSISTments", file: "ASSISTments-调研文档（202512）.pdf", region: "overseas", date: "2025-12", tags: ["自适应学习"], category: "adaptive", size: "18.2MB" },
-    { name: "Cosmo", file: "Cosmo-产品调研（202601）.pdf", region: "overseas", date: "2026-01", tags: ["K12/学科"], category: "k12", size: "12.6MB" },
-    { name: "Gakku.AI", file: "Gakku.AI-产品调研（202601）.pdf", region: "overseas", date: "2026-01", tags: ["K12/学科"], category: "k12", size: "22.8MB" },
-    { name: "Gauth", file: "Gauth 产品调研.pdf", region: "overseas", date: "-", tags: ["AI辅导"], category: "ai-tutor", size: "6.4MB" },
-    { name: "Khan Academy", file: "Khan Academy-产品调研（202512）.pdf", region: "overseas", date: "2025-12", tags: ["自适应学习"], category: "adaptive", size: "4.3MB" },
-    { name: "Khanmigo", file: "Khanmigo.pdf", region: "overseas", date: "-", tags: ["AI辅导"], category: "ai-tutor", size: "0.8MB" },
-    { name: "Learn Your Way", file: "Learn Your Way.pdf", region: "overseas", date: "-", tags: ["语言学习"], category: "language", size: "2.8MB" },
-    { name: "Nerd AI", file: "Nerd AI 产品调研.pdf", region: "overseas", date: "-", tags: ["AI辅导"], category: "ai-tutor", size: "6.5MB" },
-    { name: "Numerade", file: "Numerade产品调研报告.pdf", region: "overseas", date: "-", tags: ["工具/平台"], category: "tool", size: "28.4MB" },
-    { name: "PLUS", file: "PLUS(Personalized Learning)-产品调研（202512）.pdf", region: "overseas", date: "2025-12", tags: ["自适应学习"], category: "adaptive", size: "2.4MB" },
-    { name: "SKYLOW", file: "SKYLOW-产品体验（202511）.pdf", region: "domestic", date: "2025-11", tags: ["K12/学科"], category: "k12", size: "2.4MB" },
-    { name: "TalkAI / 流利说", file: "TalkAI 、流利说--产品调研.pdf", region: "domestic", date: "-", tags: ["语言学习"], category: "language", size: "29.4MB" },
-    { name: "ⅨL", file: "ⅨL-产品调研（202512）.pdf", region: "domestic", date: "2025-12", tags: ["K12/学科"], category: "k12", size: "5.4MB" },
-    { name: "以爱为舞·爱学", file: "以爱为舞-爱学 快速体验（202512）.pdf", region: "domestic", date: "2025-12", tags: ["K12/学科"], category: "k12", size: "9.5MB" },
-    { name: "伴鱼智学", file: "伴鱼智学产品调研.pdf", region: "domestic", date: "-", tags: ["K12/学科"], category: "k12", size: "32.4MB" },
-    { name: "作业帮 (快问AI&光速写作)", file: "作业帮旗下AI产品--快问AI&光速写作.pdf", region: "domestic", date: "-", tags: ["AI辅导"], category: "ai-tutor", size: "53.9MB" },
-    { name: "像素数据", file: "像素数据-公司调研（202511）.pdf", region: "domestic", date: "2025-11", tags: ["工具/平台"], category: "tool", size: "13.5MB" },
-    { name: "可视化教具", file: "可视化教具类产品调研.pdf", region: "domestic", date: "-", tags: ["工具/平台"], category: "tool", size: "16.2MB" },
-    { name: "小思AI", file: "小思AI产品情况.pdf", region: "domestic", date: "-", tags: ["K12/学科"], category: "k12", size: "17.8MB" },
-    { name: "小猿AI / 作业帮", file: "小猿AI、作业帮 产品调研.pdf", region: "domestic", date: "-", tags: ["AI辅导"], category: "ai-tutor", size: "52.6MB" },
-    { name: "洋葱学园", file: "洋葱学园产品调研（202510）.pdf", region: "domestic", date: "2025-10", tags: ["K12/学科"], category: "k12", size: "61.0MB" },
-    { name: "科大讯飞", file: "科大讯飞-产品调研.pdf", region: "domestic", date: "-", tags: ["大厂/综合"], category: "bigco", size: "94.5MB" },
-    { name: "知引PBL智能体", file: "知引PBL智能体-产品调研（202511）.pdf", region: "domestic", date: "2025-11", tags: ["工具/平台"], category: "tool", size: "13.2MB" },
-    { name: "诊断与规划模块", file: "诊断与规划模块-产品调研报告（202510）.pdf", region: "domestic", date: "2025-10", tags: ["工具/平台"], category: "tool", size: "21.1MB" },
-    { name: "课游记", file: "课游记-课本生成.pdf", region: "domestic", date: "-", tags: ["工具/平台"], category: "tool", size: "3.6MB" },
-    { name: "豆包爱学", file: "豆包爱学产品调研.pdf", region: "domestic", date: "2026-01", tags: ["AI辅导"], category: "ai-tutor", size: "25.9MB" },
-];
+var BASE_PATH = '工作相关/产品调研/';
+var products = [{'name': 'ALEKS', 'file': 'ALEKS-产品调研（202512）.pdf', 'region': 'overseas', 'date': '2025-12', 'tags': ['自适应学习'], 'category': 'adaptive', 'size': '6.5MB', 'summary': '基于知识空间理论(KST)的自适应学习平台，通过精准定位学生知识状态提供个性化学习路径，覆盖K12到高等教育数学领域。'}, {'name': 'ASSISTments', 'file': 'ASSISTments-调研文档（202512）.pdf', 'region': 'overseas', 'date': '2025-12', 'tags': ['自适应学习'], 'category': 'adaptive', 'size': '18.2MB', 'summary': '免费数学辅助教学平台，为教师提供作业即时反馈和学生掌握度分析，强调形成性评估与数据驱动的教学决策。'}, {'name': 'Cosmo', 'file': 'Cosmo-产品调研（202601）.pdf', 'region': 'overseas', 'date': '2026-01', 'tags': ['K12/学科'], 'category': 'k12', 'size': '12.6MB', 'summary': '面向K12学科的AI助教产品，结合大模型能力提供学科辅导、作业批改和学习规划等核心功能。'}, {'name': 'Gakku.AI', 'file': 'Gakku.AI-产品调研（202601）.pdf', 'region': 'overseas', 'date': '2026-01', 'tags': ['K12/学科'], 'category': 'k12', 'size': '22.8MB', 'summary': '哈萨克斯坦市场的AI教育产品，主打K12全科智能辅导，融合本地化课程体系与自适应学习技术。'}, {'name': 'Gauth', 'file': 'Gauth 产品调研.pdf', 'region': 'overseas', 'date': '', 'tags': ['AI辅导'], 'category': 'ai-tutor', 'size': '6.4MB', 'summary': '基于AI拍照解题的学习工具，覆盖数学等多学科，支持步骤解析和答案验证，定位为学生作业辅助。'}, {'name': 'Khan Academy', 'file': 'Khan Academy-产品调研（202512）.pdf', 'region': 'overseas', 'date': '2025-12', 'tags': ['自适应学习'], 'category': 'adaptive', 'size': '4.3MB', 'summary': '全球最大的免费在线教育平台，提供全学科视频教程与练习系统，近年集成AI助手Khanmigo提升个性化体验。'}, {'name': 'Khanmigo', 'file': 'Khanmigo.pdf', 'region': 'overseas', 'date': '', 'tags': ['AI辅导'], 'category': 'ai-tutor', 'size': '0.8MB', 'summary': 'Khan Academy推出的AI学习助手（由GPT-4驱动），支持苏格拉底式引导、作文批改、个性化练习生成等功能。'}, {'name': 'Learn Your Way', 'file': 'Learn Your Way.pdf', 'region': 'overseas', 'date': '', 'tags': ['语言学习'], 'category': 'language', 'size': '2.8MB', 'summary': '个性化语言学习平台，根据学习者目标和偏好定制学习路径，强调自主学习和灵活进度管理。'}, {'name': 'Nerd AI', 'file': 'Nerd AI 产品调研.pdf', 'region': 'overseas', 'date': '', 'tags': ['AI辅导'], 'category': 'ai-tutor', 'size': '6.5MB', 'summary': 'AI驱动的全能学习助手，支持多学科问题解答、论文写作辅助、代码解释等，面向高中生和大学生群体。'}, {'name': 'Numerade', 'file': 'Numerade产品调研报告.pdf', 'region': 'overseas', 'date': '', 'tags': ['工具/平台'], 'category': 'tool', 'size': '28.4MB', 'summary': 'STEM领域的视频题库平台，汇集大量教师录制的解题视频，覆盖数学、物理、化学、生物等核心科目。'}, {'name': 'PLUS', 'file': 'PLUS(Personalized Learning)-产品调研（202512）.pdf', 'region': 'overseas', 'date': '2025-12', 'tags': ['自适应学习'], 'category': 'adaptive', 'size': '2.4MB', 'summary': '个性化学习解决方案，通过学习分析和推荐算法为每位学生定制最优学习序列，注重学习效率提升。'}, {'name': 'SKYLOW', 'file': 'SKYLOW-产品体验（202511）.pdf', 'region': 'domestic', 'date': '2025-11', 'tags': ['K12/学科'], 'category': 'k12', 'size': '2.4MB', 'summary': '国内K12学科学习产品，主打互动式课堂体验与知识点可视化讲解，聚焦理科科目深度学习。'}, {'name': 'TalkAI / 流利说', 'file': 'TalkAI 、流利说--产品调研.pdf', 'region': 'domestic', 'date': '', 'tags': ['语言学习'], 'category': 'language', 'size': '29.4MB', 'summary': 'AI口语练习产品，利用语音识别和NLP技术提供实时发音纠正与对话模拟，覆盖多场景英语口语训练。'}, {'name': 'ⅨL', 'file': 'ⅨL-产品调研（202512）.pdf', 'region': 'domestic', 'date': '2025-12', 'tags': ['K12/学科'], 'category': 'k12', 'size': '5.4MB', 'summary': '国内K12学科辅导产品，以AI驱动的大班个性化教学为核心，整合学情诊断与精准推送能力。'}, {'name': '以爱为舞·爱学', 'file': '以爱为舞-爱学 快速体验（202512）.pdf', 'region': 'domestic', 'date': '2025-12', 'tags': ['K12/学科'], 'category': 'k12', 'size': '9.5MB', 'summary': '「以爱为舞」旗下教育子品牌，专注K12趣味化学习体验设计，将游戏化机制融入学科知识传授过程。'}, {'name': '伴鱼智学', 'file': '伴鱼智学产品调研.pdf', 'region': 'domestic', 'date': '', 'tags': ['K12/学科'], 'category': 'k12', 'size': '32.4MB', 'summary': '伴鱼少儿英语延伸出的全科智能学习产品，采用AI外教+自适应内容推荐的双引擎模式服务K12用户。'}, {'name': '作业帮 (快问AI&光速写作)', 'file': '作业帮旗下AI产品--快问AI&光速写作.pdf', 'region': 'domestic', 'date': '', 'tags': ['AI辅导'], 'category': 'ai-tutor', 'size': '53.9MB', 'summary': '作业帮旗下两大AI产品：快问AI主打拍照搜题与即时答疑，光速写作聚焦AI辅助作文生成与批改。'}, {'name': '像素数据', 'file': '像素数据-公司调研（202511）.pdf', 'region': 'domestic', 'date': '2025-11', 'tags': ['工具/平台'], 'category': 'tool', 'size': '13.5MB', 'summary': '教育科技数据服务商，为教育机构提供数据采集、分析及可视化解决方案，支撑教学决策优化。'}, {'name': '可视化教具', 'file': '可视化教具类产品调研.pdf', 'region': 'domestic', 'date': '', 'tags': ['工具/平台'], 'category': 'tool', 'size': '16.2MB', 'summary': '数字化教学工具集合调研，涵盖虚拟实验、交互白板、3D模型等品类在课堂教学中的应用现状与发展趋势。'}, {'name': '小思AI', 'file': '小思AI产品情况.pdf', 'region': 'domestic', 'date': '', 'tags': ['K12/学科'], 'category': 'k12', 'size': '17.8MB', 'summary': '面向K12的AI学伴产品，以对话式交互为特色，提供答疑解惑、知识点讲解和学习计划制定等核心功能。'}, {'name': '小猿AI / 作业帮', 'file': '小猿AI、作业帮 产品调研.pdf', 'region': 'domestic', 'date': '', 'tags': ['AI辅导'], 'category': 'ai-tutor', 'size': '52.6MB', 'summary': '小猿搜索旗下AI学习产品，依托海量题库和OCR技术提供拍照搜题、错因分析与举一反三练习等服务。'}, {'name': '洋葱学园', 'file': '洋葱学园产品调研（202510）.pdf', 'region': 'domestic', 'date': '2025-10', 'tags': ['K12/学科'], 'category': 'k12', 'size': '61.0MB', 'summary': '国内领先的K12趣味动画微课平台，用短视频+动画形式拆解复杂知识点，累计覆盖数千万中小学生用户。'}, {'name': '科大讯飞', 'file': '科大讯飞-产品调研.pdf', 'region': 'domestic', 'date': '', 'tags': ['大厂/综合'], 'category': 'bigco', 'size': '94.5MB', 'summary': 'AI教育赛道头部玩家，涵盖智慧课堂、AI学习机、英语评测、OCR批改等全线产品矩阵，技术底座为大模型+语音。'}, {'name': '知引PBL智能体', 'file': '知引PBL智能体-产品调研（202511）.pdf', 'region': 'domestic', 'date': '2025-11', 'tags': ['工具/平台'], 'category': 'tool', 'size': '13.2MB', 'summary': '基于项目制学习(PBL)理念的AI智能体产品，引导学生通过探究式项目完成跨学科知识建构与应用。'}, {'name': '诊断与规划模块', 'file': '诊断与规划模块-产品调研报告（202510）.pdf', 'region': 'domestic', 'date': '2025-10', 'tags': ['工具/平台'], 'category': 'tool', 'size': '21.1MB', 'summary': '教育产品的学情诊断与学习路径规划模块调研，分析主流产品的测评体系设计与个性化推荐逻辑。'}, {'name': '课游记', 'file': '课游记-课本生成.pdf', 'region': 'domestic', 'date': '', 'tags': ['工具/平台'], 'category': 'tool', 'size': '3.6MB', 'summary': 'AI驱动的课件/教材自动生成工具，可根据教学大纲快速产出结构化课件内容，减轻教师备课负担。'}, {'name': '豆包爱学', 'file': '豆包爱学产品调研.pdf', 'region': 'domestic', 'date': '2026-01', 'tags': ['AI辅导'], 'category': 'ai-tutor', 'size': '25.9MB', 'summary': '字节跳动豆包大模型在教育场景的落地产品，主打AI问答辅导、作文批改和多模态学习内容理解能力。'}];
 
 // ============================================================
-// DATA: Reading Zone (embedded for now, can be loaded from JSON later)
+// DATA: Reading Zone
 // ============================================================
-const readings = [
-    {
-        id: "r001",
-        title: "阅读能让我们成为更好的人吗？",
-        source: "利维坦（Aeon 译文）",
-        author: "Flora Champy / 译：tamiya2",
-        url: "https://mp.weixin.qq.com/s/g4UYcPl-FxGhs8k0Fv9U9w",
-        category: "literature",
-        categoryLabel: "📚 Literature",
-        tags: ["阅读", "文学哲学", "个人自由", "普鲁斯特"],
-        summary: "通过普鲁斯特、拉斯金、卢梭等思想家对阅读功能的分歧，论证文学的真正价值不在于道德说教，而在于训练独立思考的能力。语言为理解保留了空间，允许犹豫与误读。文学是通往个人自由的隐秘路径。",
-        addedAt: "2026-04-30",
-        readStatus: "unread",
-        wordCount: "~5000字"
-    }
-];
+var readings = [{'id': 'r001', 'title': '阅读能让我们成为更好的人吗？', 'source': '利维坦（Aeon 译文）', 'author': 'Flora Champy / 译：tamiya2', 'url': 'https://mp.weixin.qq.com/s/g4UYcPl-FxGhs8k0Fv9U9w', 'category': 'literature', 'categoryLabel': '📚 Literature', 'tags': ['阅读', '文学哲学', '个人自由', '普鲁斯特'], 'summary': '通过普鲁斯特、拉斯金、卢梭等思想家对阅读功能的分歧，论证文学的真正价值不在于道德说教，而在于训练独立思考的能力。语言为理解保留了空间，允许犹豫与误读。文学是通往个人自由的隐秘路径。', 'addedAt': '2026-04-30', 'readStatus': 'unread', 'wordCount': '~5000字'}];
 
 // ============================================================
 // STATE
 // ============================================================
-let currentTab = 'work';
-let currentFilter = 'all';
-let currentReadingFilter = 'all';
-let currentWritingFilter = 'all';
-let searchQuery = '';
+var currentTab = 'work';
+var currentFilter = 'all';
+var currentReadingFilter = 'all';
+var currentWritingFilter = 'all';
+var searchQuery = '';
 
 // ============================================================
 // INIT
@@ -890,72 +1203,68 @@ updateCounts();
 // ============================================================
 function switchTab(tabName, btn) {
   currentTab = tabName;
-  // Hide all panels
   document.querySelectorAll('.tab-panel').forEach(function(p) { p.style.display = 'none'; });
-  // Show target panel
   var targetPanel = document.getElementById('panel-' + tabName);
   if (targetPanel) { targetPanel.style.display = 'block'; }
-
-  // Update tab buttons
   document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
   if (btn) btn.classList.add('active');
   else {
     var targetBtn = document.querySelector('.tab-btn[data-tab="' + tabName + '"]');
     if (targetBtn) targetBtn.classList.add('active');
   }
-
-  // Update bookmark bar active state
   document.querySelectorAll('.bookmark-item').forEach(function(l) { l.classList.remove('reading-active'); });
-  var linkMap = { 'work': 'tabLinkWork', 'reading': 'tabLinkReading', 'writing': 'tabLinkWriting', 'others': 'tabLinkOthers' };
+  var linkMap = { work: 'tabLinkWork', reading: 'tabLinkReading', writing: 'tabLinkWriting', others: 'tabLinkOthers' };
   var activeLink = document.getElementById(linkMap[tabName]);
   if (activeLink) activeLink.classList.add('reading-active');
-
-  // Scroll to main content
   var mainEl = document.querySelector('.main');
   if (mainEl) mainEl.scrollIntoView({ behavior: 'instant' });
 }
 
 // ============================================================
-// RESEARCH SECTION (Products)
+// RESEARCH SECTION (Products) - WITH SUMMARY DISPLAY
 // ============================================================
 function renderCards() {
-    const container = document.getElementById('cardsContainer');
-    const emptyState = document.getElementById('emptyState');
-    let filtered = products.filter(function(p) {
-      const matchFilter = currentFilter === 'all' || p.region === currentFilter || p.category === currentFilter;
-      const matchSearch = searchQuery === '' || p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.tags.some(function(t){return t.includes(searchQuery)}) || p.file.includes(searchQuery);
+    var container = document.getElementById('cardsContainer');
+    var emptyState = document.getElementById('emptyState');
+    var filtered = products.filter(function(p) {
+      var matchFilter = currentFilter === 'all' || p.region === currentFilter || p.category === currentFilter;
+      var matchSearch = searchQuery === '' || p.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1 || p.tags.some(function(t){return t.indexOf(searchQuery)!==-1}) || (p.summary&&p.summary.indexOf(searchQuery)!==-1) || p.file.indexOf(searchQuery)!==-1;
       return matchFilter && matchSearch;
     });
     if (filtered.length === 0) { container.innerHTML = ''; emptyState.style.display = 'block'; return; }
     emptyState.style.display = 'none';
-    const overseas = filtered.filter(function(p) { return p.region === 'overseas'; });
-    const domestic = filtered.filter(function(p) { return p.region === 'domestic'; });
-    let html = '';
-    if (overseas.length > 0) html += buildCard('海外产品 (' + overseas.length + ')', '\uD83C\uDDFA\uD83C\uDDF8', 'count-blue', overseas);
-    if (domestic.length > 0) html += buildCard('国内产品 (' + domestic.length + ')', '\uD83C\uDDE8\uD83C\uDDF3', 'count-green', domestic);
+    var overseas = filtered.filter(function(p) { return p.region === 'overseas'; });
+    var domestic = filtered.filter(function(p) { return p.region === 'domestic'; });
+    var html = '';
+    if (overseas.length > 0) html += buildCard('Overseas Products (' + overseas.length + ')', '&#x1F1FA;&#x1F1F8;', 'count-blue', overseas);
+    if (domestic.length > 0) html += buildCard('Domestic Products (' + domestic.length + ')', '&#x1F1E8;&#x1F1F3;', 'count-green', domestic);
     container.innerHTML = html;
     bindCardEvents();
 }
 
 function buildCard(title, emoji, countClass, items) {
     var listItems = items.map(function(p) {
+        var summaryHtml = p.summary ? '<div class="product-summary">' + p.summary + '</div>' : '';
         return '<li class="product-item">' +
             '<div class="product-left">' +
-                '<span class="product-name">' + p.name + '</span>' +
-                '<span class="product-tag ' + (p.region === 'overseas' ? 'tag-overseas' : 'tag-cn') + '">' + (p.region === 'overseas' ? '海外' : '国内') + '</span>' +
+                '<div class="product-name-row">' +
+                    '<span class="product-name">' + p.name + '</span>' +
+                    '<span class="product-tag ' + (p.region === 'overseas' ? 'tag-overseas' : 'tag-cn') + '">' + (p.region === 'overseas' ? 'OVERSEAS' : 'DOMESTIC') + '</span>' +
+                '</div>' +
+                summaryHtml +
             '</div>' +
             '<div class="product-right">' +
-                '<span class="product-meta">' + p.size + ' \u00B7 ' + p.tags.join('/') + '</span>' +
-                '<a class="open-btn" href="' + BASE_PATH + encodeURIComponent(p.file).replace(/%2F/g, '/') + '" target="_blank" onclick="event.stopPropagation();"><span class="btn-icon">\uD83D\uDCC4</span> 打开PDF</a>' +
+                '<span class="product-meta">' + p.size + ' · ' + p.tags.join('/') + '</span>' +
+                '<a class="open-btn" href="' + BASE_PATH + encodeURIComponent(p.file).replace(/%2F/g, '/') + '" target="_blank" onclick="event.stopPropagation();"><span class="btn-icon">&#x1F4C4;</span>Open PDF</a>' +
             '</div>' +
         '</li>';
     }).join('');
 
     return '<div class="card">' +
         '<div class="card-header">' +
-            '<div class="card-title-row"><span class="card-title">' + emoji + ' ' + title + '</span><span class="count ' + countClass + '">' + items.length + '\u4e2a\u4ea7\u54c1</span></div>' +
-            '<p class="card-desc">\u70b9\u51fb\u5c55\u5f00\u67e5\u770b\u5b8c\u6574\u5217\u8868\uff0c\u6bcf\u4e2a\u4ea7\u54c1\u90fd\u53ef\u76f4\u63a5\u6253\u5f00\u539f PDF \u6587\u4ef6</p>' +
-            '<p class="expand-hint">\u5c55\u5f00\u67e5\u770b\u8be6\u60c5 \u25BC</p>' +
+            '<div class="card-title-row"><span class="card-title">' + emoji + ' ' + title + '</span><span class="count ' + countClass + '">' + items.length + ' items</span></div>' +
+            '<p class="card-desc">Click to expand and view the full list. Each product opens its original PDF file.</p>' +
+            '<p class="expand-hint">Expand Details ▾</p>' +
         '</div>' +
         '<div class="card-content"><ul class="product-list">' + listItems + '</ul></div></div>';
 }
@@ -975,7 +1284,7 @@ function bindCardEvents() {
             var hint = this.querySelector('.expand-hint');
             if (content) {
                 content.classList.toggle('active');
-                if (hint) hint.textContent = content.classList.contains('active') ? '\u6536\u8d77 \u25B2' : '\u5c55\u5f00\u67e5\u770b\u8be6\u60c7 \u25BC';
+                if (hint) hint.textContent = content.classList.contains('active') ? 'Collapse ▴' : 'Expand Details ▾';
             }
         });
     });
@@ -985,20 +1294,18 @@ function bindCardEvents() {
 // READING ZONE
 // ============================================================
 function renderReading() {
-    const container = document.getElementById('readingContainer');
-    const emptyEl = document.getElementById('readingEmpty');
+    var container = document.getElementById('readingContainer');
+    var emptyEl = document.getElementById('readingEmpty');
 
-    let filtered = readings.filter(function(r) {
-        // Category filter
+    var filtered = readings.filter(function(r) {
         var matchCat = currentReadingFilter === 'all' ||
                        r.category === currentReadingFilter ||
                        (currentReadingFilter === 'unread' && r.readStatus === 'unread');
-        // Search filter
         var matchSearch = searchQuery === '' ||
-                          r.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          r.summary.includes(searchQuery) ||
-                          r.tags.some(function(t){return t.includes(searchQuery)}) ||
-                          r.source.toLowerCase().includes(searchQuery.toLowerCase());
+                          r.title.toLowerCase().indexOf(searchQuery.toLowerCase())!==-1 ||
+                          r.summary.indexOf(searchQuery)!==-1 ||
+                          r.tags.some(function(t){return t.indexOf(searchQuery)!==-1}) ||
+                          r.source.toLowerCase().indexOf(searchQuery.toLowerCase())!==-1;
         return matchCat && matchSearch;
     });
 
@@ -1012,7 +1319,7 @@ function renderReading() {
     var html = '';
     filtered.forEach(function(r, i) {
         var statusClass = r.readStatus === 'unread' ? 'status-unread' : 'status-read';
-        var statusTitle = r.readStatus === 'unread' ? '未读' : '已读';
+        var statusTitle = r.readStatus === 'unread' ? 'Unread' : 'Read';
 
         html += '<div class="reading-card cat-' + r.category + '" id="card-' + r.id + '">' +
             '<div class="reading-rank">' + (i + 1) + '</div>' +
@@ -1024,7 +1331,7 @@ function renderReading() {
                 '<div class="reading-meta">' +
                     '<span class="reading-tag">' + r.categoryLabel + '</span>' +
                     '<span>' + r.wordCount + '</span>' +
-                    '<span>\u6536\u85cf\u4e8e ' + r.addedAt + '</span>' +
+                    '<span>Added ' + r.addedAt + '</span>' +
                     (r.author ? '<span>' + r.author + '</span>' : '') +
                 '</div>' +
                 '<div class="reading-tags">' +
@@ -1033,20 +1340,20 @@ function renderReading() {
                 '<div class="reading-summary">' + r.summary + '</div>' +
                 '<div class="ai-panel" id="aiPanel-' + r.id + '">' +
                     '<div class="ai-panel-header" onclick="toggleAIPanel(\'' + r.id + '\')">' +
-                        '<div class="ai-panel-title"><span>\u{1F916}</span> AI \u6DF1\u5EA6\u89E3\u8BFB <span class="ai-panel-badge" id="aiBadge-' + r.id + '">\u5BF9\u8BD70</span></div>' +
-                        '<span>\u25BC</span>' +
+                        '<div class="ai-panel-title"><span>&#x1F916;</span> AI Deep Analysis <span class="ai-panel-badge" id="aiBadge-' + r.id + '">0Q</span></div>' +
+                        '<span>&#x25BC;</span>' +
                     '</div>' +
                     '<div class="ai-messages" id="aiMessages-' + r.id + '"></div>' +
                     '<div class="ai-input-area">' +
-                        '<input class="ai-input-field" id="aiInput-' + r.id + '" placeholder="\u7EE7\u7EED\u8BEF\u95EE... Enter\u53D1\u9001" onkeydown="if(event.key===\'Enter\')sendAIMsg(\'' + r.id + '\')">' +
-                        '<button class="ai-send-btn" id="aiSendBtn-' + r.id + '" onclick="sendAIMsg(\'' + r.id + '\')">\u2192</button>' +
+                        '<input class="ai-input-field" id="aiInput-' + r.id + '" placeholder="Ask follow-up... Enter to send" onkeydown="if(event.key===\'Enter\')sendAIMsg(\'' + r.id + '\')">' +
+                        '<button class="ai-send-btn" id="aiSendBtn-' + r.id + '" onclick="sendAIMsg(\'' + r.id + '\')">&rarr;</button>' +
                     '</div>' +
                 '</div>' +
             '</div>' +
             '<div class="reading-actions">' +
                 '<div class="status-dot ' + statusClass + '" title="' + statusTitle + '"></div>' +
-                '<button class="ai-summary-btn" id="aiBtn-' + r.id + '" onclick="openAIChat(\'' + r.id + '\', this)">\u{1F916} AI\u89E3\u8BFB</button>' +
-                '<a class="read-btn" href="' + r.url + '" target="_blank" rel="noopener" onclick="markAsRead(\'' + r.id + '\')">\u2192 \u9605\u8bfb</a>' +
+                '<button class="ai-summary-btn" id="aiBtn-' + r.id + '" onclick="openAIChat(\'' + r.id + '\', this)">\u{1F916} AI Read</button>' +
+                '<a class="read-btn" href="' + r.url + '" target="_blank" rel="noopener" onclick="markAsRead(\'' + r.id + '\')">&rarr; Read</a>' +
             '</div>' +
         '</div>';
     });
@@ -1056,18 +1363,12 @@ function renderReading() {
 }
 
 function setReadingFilter(filter, btn) {
-    // Switch to reading tab first if not there
     if (currentTab !== 'reading') switchTab('reading');
-
     currentReadingFilter = filter;
     document.querySelectorAll('#readingQuickBar .quick-btn').forEach(function(b) { b.classList.remove('active'); });
     if (btn) btn.classList.add('active');
     renderReading();
-
-    // Also update bookmark bar buttons
-    document.querySelectorAll('.bookmark-item').forEach(function(item) {
-        item.classList.remove('reading-active');
-    });
+    document.querySelectorAll('.bookmark-item').forEach(function(item) { item.classList.remove('reading-active'); });
     if (btn) btn.classList.add('reading-active');
 }
 
@@ -1079,10 +1380,7 @@ function setWritingFilter(filter, btn) {
 }
 
 function markAsRead(id) {
-    readings.forEach(function(r) {
-        if (r.id === id) r.readStatus = 'read';
-    });
-    // Re-render to update UI
+    readings.forEach(function(r) { if (r.id === id) r.readStatus = 'read'; });
     setTimeout(renderReading, 300);
 }
 
@@ -1092,7 +1390,7 @@ function updateCounts() {
     var rbc = document.getElementById('readingBadgeCount');
     if (rc) rc.textContent = readings.length;
     if (tbc) tbc.textContent = readings.length;
-    if (rbc) rbc.textContent = readings.length + ' collections';
+    if (rbc) rbc.textContent = readings.length + ' Articles';
 }
 
 function showAddReadingHint() {
@@ -1100,9 +1398,8 @@ function showAddReadingHint() {
 }
 
 // ============================================================
-// AI DEEP ANALYSIS + CHAT SYSTEM (per article)
+// AI DEEP ANALYSIS + CHAT SYSTEM
 // ============================================================
-
 var aiChatState = {};
 
 function openAIChat(id, btn) {
@@ -1112,12 +1409,12 @@ function openAIChat(id, btn) {
     if (isOpen) {
         panel.classList.remove('show');
         btn.classList.remove('active');
-        btn.innerHTML = '\u{1F916} AI\u89E3\u8BFB';
+        btn.innerHTML = '&#x1F916; AI Read';
         return;
     }
     panel.classList.add('show');
     btn.classList.add('active');
-    btn.innerHTML = '\u{1F4BE} \u6536\u8D77';
+    btn.innerHTML = '&#x1F4BE; Collapse';
     if (!aiChatState[id]) {
         aiChatState[id] = { messages: [], ready: false };
         sendDeepAnalysis(id);
@@ -1142,13 +1439,8 @@ function toggleAIPanel(id) {
 function sendDeepAnalysis(id) {
     var reading = readings.find(function(r) { return r.id === id; });
     if (!reading) return;
-    addAIMessage(id, 'user', '\u5E2E\u6211\u6DF1\u5EA6\u89E3\u8BFB\u8FD9\u7BC7\u6587\u7AE0', false);
+    addAIMessage(id, 'user', 'Help me deeply analyze this article', false);
     showTyping(id);
-    localStorage.setItem('kb_ai_deep_' + id, JSON.stringify({
-        id: id, title: reading.title, url: reading.url,
-        prompt: '[\u6DF1\u5EA6\u6587\u7AE5\u89E3\u8BFB] ' + reading.title + ' - ' + reading.source,
-        timestamp: Date.now(), type: 'deep_analysis'
-    }));
     setTimeout(function() {
         removeTyping(id);
         var html = generateDeepAnalysis(reading);
@@ -1156,12 +1448,7 @@ function sendDeepAnalysis(id) {
         aiChatState[id].ready = true;
         updateAIBadge(id);
         setTimeout(function() {
-            addQuickChips(id, [
-                '\u8FD9\u7BC7\u7684\u4E3B\u5F20\u662F\u4EC0\u4E48?',
-                '\u6709\u54EA\u4E9B\u53EF\u8D28\u7591\u7684\u5730\u65B9?',
-                '\u5982\u4F55\u5E94\u7528\u5230\u6211\u7684\u5DE5\u4F5C\u4E2D?',
-                '\u76F8\u5173\u5EF6\u4F38\u9605\u8BFB\u6709\u54EA\u4E9B?'
-            ]);
+            addQuickChips(id, ['What is the main thesis?', 'What are questionable points?', 'How can I apply this at work?', 'Related further reads?']);
         }, 200);
     }, 1500);
 }
@@ -1177,10 +1464,6 @@ function sendAIMsg(id) {
     var sendBtn = document.getElementById('aiSendBtn-' + id);
     sendBtn.disabled = true;
     showTyping(id);
-    localStorage.setItem('kb_ai_chat_' + id, JSON.stringify({
-        articleId: id, articleTitle: reading.title,
-        question: text, timestamp: Date.now()
-    }));
     setTimeout(function() {
         removeTyping(id);
         sendBtn.disabled = false;
@@ -1199,8 +1482,8 @@ function addAIMessage(id, role, html, visible) {
     aiChatState[id].messages.push({ role: role, content: html, time: Date.now() });
     if (!visible) return;
     var avatarClass = role === 'assistant' ? 'ai' : 'user';
-    var nameText = role === 'assistant' ? 'AI \u89E3\u8BFB\u52A9\u624B' : '\u4F60';
-    var avatarEmoji = role === 'assistant' ? '\u{1F916}' : '\u{1F464}';
+    var nameText = role === 'assistant' ? 'AI Assistant' : 'You';
+    var avatarEmoji = role === 'assistant' ? '&#x1F916;' : '&#x1F464;';
     var msgClass = role === 'assistant' ? 'ai-assistant' : 'user-msg';
     var div = document.createElement('div');
     div.className = 'ai-msg ' + msgClass;
@@ -1217,8 +1500,8 @@ function showTyping(id) {
     if (!msgEl) return;
     var div = document.createElement('div');
     div.className = 'ai-msg ai-assistant'; div.id = 'typing-' + id;
-    div.innerHTML = '<div class="ai-msg-avatar ai">\u{1F916}</div>' +
-        '<div class="ai-msg-body"><div class="ai-msg-name">AI \u89E3\u8BFB\u52A9\u624B</div>' +
+    div.innerHTML = '<div class="ai-msg-avatar ai">&#x1F916;</div>' +
+        '<div class="ai-msg-body"><div class="ai-msg-name">AI Assistant</div>' +
         '<div class="ai-msg-text"><div class="ai-typing"><div class="ai-typing-dot"></div><div class="ai-typing-dot"></div><div class="ai-typing-dot"></div></div></div></div>';
     msgEl.appendChild(div); msgEl.scrollTop = msgEl.scrollHeight;
 }
@@ -1243,71 +1526,70 @@ function clickChip(id, question) {
 function updateAIBadge(id) {
     var badge = document.getElementById('aiBadge-'+id);
     var count = (aiChatState[id] && aiChatState[id].messages) ? aiChatState[id].messages.length : 0;
-    if (badge) badge.textContent = count > 0 ? (count>>1)+'+\u95EE' : '';
+    if (badge) badge.textContent = count > 0 ? Math.floor(count/2)+'Q' : '';
 }
 
 function generateDeepAnalysis(r) {
     var h = '';
-    h += '<h4>\u{1F4AD} \u6838\u5FC3\u8BBA\u70B9</h4>';
+    h += '<h4>&#x1F4AD; Core Thesis</h4>';
     h += '<p>' + r.summary + '</p>';
     if (r.tags && r.tags.length > 0)
-        h += '<p style="margin-top:6px;">\u6587\u7AE4\u56F4\u7ED5 <strong>' + r.tags.slice(0,2).join('</strong> \u548C <strong>') + '</strong> \u5C55\u5F00\u8BA8\u8BBA, \u5C5E\u4E8E <em>'+r.categoryLabel+'</em> \u7C7B\u578B.</p>';
+        h += '<p style="margin-top:6px;">The article revolves around <strong>' + r.tags.slice(0,2).join('</strong> and <strong>') + '</strong>, belonging to <em>'+r.categoryLabel+'</em>.</p>';
     h += '<hr class="ai-msg-divider">';
-    h += '<h4>\u{1F9E0} \u6DF1\u5EA6\u89E3\u8BFB</h4>';
+    h += '<h4>&#x1F9E0; Deep Analysis</h4>';
     h += '<ol>';
-    h += '<li><strong>\u6587\u7AE4\u7684"\u95EE\u9898\u610F\u8BC6"</strong> — \u4F5C\u8005\u56DE\u5E94\u6838\u5FC3\u7591\u60D1: "'+(r.title.length>30?r.title.substring(0,30)+'...':r.title)+'" \u8FD9\u4E2A\u95EE\u9898\u5E76\u975E\u84DD\u767D\u76F4\u63A5, \u9700\u8981\u4ECE\u66F4\u6DF1\u5C42\u7406\u89E3.</li>';
-    h += '<li><strong>\u8BBA\u8BC1\u7EBF\u7D22</strong> — \u91C7\u7528 <em>\u539F\u7406\u6027\u8BA8\u8BBA</em> \u65B9\u6CD5, \u901A\u8FC7\u591A\u89D2\u5EA6(\u601D\u60F3\u5BB6\u89C2\u70B9 vs \u5B9E\u8DF5\u6848\u4F8B)\u6784\u5EFA\u8BBA\u8BC1. \u903B\u8F93: \u63D0\u51FA\u5047\u8BBE \u2192 \u4E3E\u4F8B\u8BC1\u660E \u2192 \u62D3\u5C55\u542B\u4E49 \u2192 \u5F15\u51FA\u542F\u793A.</li>';
-    h += '<li><strong>\u9690\u6027\u5047\u8BBE</strong> — <blockquote>\u9605\u8BFB\u7684\u4EF7\u503C\u4E0D\u5728\u4E8E"\u6559\u80B2"\u800C\u5728\u4E8E"\u81EA\u7531" — \u6587\u5B66\u4E3A\u8BFB\u8005\u7559\u51FA\u72EC\u7ACB\u601D\u8003\u7684\u7A7A\u95F4, \u8FD9\u79CD\u7A7A\u95F4\u672C\u8EAB\u5C31\u662F\u4E00\u79CD\u81EA\u7531.</blockquote></li>';
-    h += '<li><strong>\u5B9E\u8DF5\u542F\u793A</strong> — \u5BF9\u4E8E\u5185\u5BB9\u521B\u4F5C\u8005: \u601D\u8003"\u5185\u5BB9\u7684\u76EE\u7684"vs"\u5185\u5BB9\u7684\u6548\u679C"; \u5BF9\u4E8E\u6559\u80B2\u4EA7\u54C1: \u5982\u4F55\u8BA9\u5DE5\u5177\u7559\u51FA\u601D\u8003\u7A7A\u95F4?; \u5BF9\u6BCF\u4E2A\u8BFB\u8005: \u4F60\u7684\u9605\u8BFB\u4E60\u60EF\u662F\u5426\u4E5F\u5728"\u786E\u5B9A\u7B54\u6848"?</li>';
+    h += '<li><strong>The Question of Meaning</strong> — The author responds to: "'+(r.title.length>30?r.title.substring(0,30)+'...':r.title)+'" requires deeper understanding than surface-level answers.</li>';
+    h += '<li><strong>Argument Structure</strong> — Uses <em>rhetorical argumentation</em>, building through multiple perspectives (thinkers vs. practical examples).</li>';
+    h += '<li><strong>Implicit Premise</strong> — <blockquote>The value of reading lies not in "education" but in "freedom" — literature leaves space for independent thought, which itself is freedom.</blockquote></li>';
+    h += '<li><strong>Practical Takeaways</strong> — For content creators: consider purpose vs. effect. For educators: how do tools leave room for thinking?</li>';
     h += '</ol>';
     h += '<hr class="ai-msg-divider">';
-    h += '<h4>\u{1F3AF} \u5F15\u53D1\u601D\u8003</h4>';
-    h += '<ul><li>\u5982\u679C\u4F5C\u8005\u7684\u524D\u63D0\u504F\u8BBE\u4E0D\u6210\u7ABB, \u6587\u7AE4\u7684\u8BBA\u70B9\u8FD8\u6219\u7ACB\u5417?</li>';
-    h += '<li>\u8FD9\u7BC7\u6587\u7AE4\u548C\u4F60\u4E4B\u524D\u7684\u8BA4\u77E5\u662F\u4E92\u8865\u8FD8\u662F\u77DB\u76FE?</li>';
-    h += '<li>\u4F5C\u8005\u6CA1\u6709\u8BF4\u5230\u7684\u662F\u54EA\u90E8\u5206? \u662F\u65E0\u610F\u8FD8\u662F\u6709\u610F\u7701\u7565?</li></ul>';
+    h += '<h4>&#x1F3AF; Reflection Prompts</h4>';
+    h += '<ul><li>If the author\u2019s premise were flawed, would the argument still hold?</li>';
+    h += '<li>How does this relate to your prior knowledge — complementary or contradictory?</li>';
+    h += '<li>What did the author choose NOT to say? Omission or intentional?</li></ul>';
     return h;
 }
 
 function generateFollowUpResponse(r, qRaw) {
     var q = qRaw.toLowerCase();
-    if (q.indexOf('\u4E3B\u5F20') !== -1 || q.indexOf('\u8BBA\u70B9') !== -1 || q.indexOf('\u6838\u5FC3') !== -1)
-        return '<p>\u8FD9\u7BC7\u7684<em>\u6838\u5FC3\u4E3B\u5F20</em>:</p>'+
-            '<blockquote>\u201C'+r.summary.substring(0,80)+(r.summary.length>80?'...':'')+'\u201D</blockquote>'+
-            '<p>\u66F4\u7CBE\u786E\u5730: \u4F5C\u8005\u5728\u8BBA\u8BC1 <strong>'+(r.tags[0]||'\u9605\u8BFB')+'</strong> \u5E76\u4E0D\u662F\u7B80\u5355\u5DE5\u5177\u6027\u6982\u5FF5, \u800C\u662F\u4E00\u79CD<em>\u601D\u7EF4\u65B9\u5F0F</em>. \u6587\u7AE4\u901A\u8FC7\u591A\u4E2A\u601D\u60F3\u5BB6\u7684\u5206\u6B67\u89C2\u70B9, \u8BC1\u660E\u4E86\u8FD9\u79CD\u591A\u7EF4\u6027.</p>'+
-            '<p>\u53EF\u4EE5\u7EE7\u7EED\u95EE: \u8FD9\u4E2A\u89C2\u70B9\u5BF9\u4E8E AI+\u6559\u80B2\u8D8B\u52BF\u6709\u4EC0\u4E48\u542F\u793A?</p>';
-    if (q.indexOf('\u8D28\u7591') !== -1 || q.indexOf('\u4E0D\u8DB3') !== -1 || q.indexOf('\u7F3A\u70B9') !== -1 || q.indexOf('\u95EE\u9898') !== -1)
-        return '<p>\u4ECE<em>\u6279\u5224\u6027\u601D\u8003</em>\u89D2\u5EA6:</p><ol>'+
-            '<li><strong>\u6837\u672C\u504F\u5DEE</strong> — \u4E3B\u8981\u5F15\u7528\u6B27\u6D32\u6587\u5B66/\u54F2\u5B66, \u5BF9\u975E\u897F\u65B9\u8BED\u5883\u7684\u666E\u904D\u6027\u53EF\u80FD\u6709\u9650.</li>'+
-            '<li><strong>"\u9605\u8BFB"\u5B9A\u4E49\u7B80\u5316</strong> — \u503E\u5411\u4E8E\u6587\u5B66/\u54F2\u5B66\u6587\u672C, \u4F46\u73B0\u4EE3\u9605\u8BFB\u5F62\u5F0F(\u793E\u4EA4\u5A92\u4F53/\u64AD\u5BA2/\u957F\u6587\u7AE4...)\u5DF2\u7ECF\u592A\u591A\u6837.</li>'+
-            '<li><strong>\u7F3A\u4E4F\u5B9E\u8BC1\u6570\u636E</strong> — \u6610\u8BBA\u591A, \u4F8B\u8BC1/\u6570\u636E\u5C11. \u8FD9\u662F\u601D\u60F3\u7C7B\u6587\u7AE4\u5171\u6027, \u4F46\u4E5F\u8BA9\u8BBA\u70B9\u50CF"\u4FE1\u4EF0"\u800C\u975E"\u77E5\u8BC6".</li></ol>'+
-            '<p>\u4F46\u4E5F\u4E0D\u5168\u662F\u7F3A\u70B9 \u2014 \u4F5C\u8005\u610F\u56FE\u672C\u8EAB\u5C31\u662F"\u5F15\u53D1\u601D\u8003", \u800C\u975E"\u7ED9\u51FA\u7B54\u6848". \u4F60\u89C9\u5F97\u8FD9\u6837\u5199\u4F5C\u7B56\u7565\u6709\u6548\u5417?</p>';
-    if (q.indexOf('\u5E94\u7528') !== -1 || q.indexOf('\u5B9E\u8DF5') !== -1 || q.indexOf('\u5DE5\u4F5C') !== -1)
-        return '<p>\u7ED3\u5408\u6587\u7AE4\u4E0E\u5B9E\u9645:</p><ul>'+
-            '<li><strong>\u5185\u5BB9\u4EA7\u54C1</strong>: \u6BCF\u7BC7\u5185\u5BB9\u90FD\u9700\u8981"\u6559\u80B2"\u5417? \u6216\u7559\u51FA\u7A7A\u95F4\u8BA9\u8BFB\u8005\u81EA\u5DF1\u601D\u8003?</li>'+
-            '<li><strong>\u6559\u80B2\u4EA7\u54C1</strong>: AI+\u6559\u80B2\u4E0D\u5E94\u8BE5\u53EA\u662F"\u4E0A\u8BBE\u4F20\u9012", \u66F4\u91CD\u8981\u662F\u5982\u4F55\u8BA9\u5B66\u751F\u5EFA\u7ACB\u81EA\u5DF1\u7684\u7406\u89E3\u6846\u67B6.</li>'+
-            '<li><strong>\u4E2A\u4EBA\u6210\u957F</strong>: \u9605\u8BFB\u7684\u771F\u6B63\u4EF7\u503C\u53EF\u80FD\u662F"\u5F00\u653E\u601D\u7EF4\u7684\u6A21\u578B", \u800C\u975E\u7B80\u5355\u7684\u77E5\u8BC6\u7D2F\u79EF.</li></ul>';
-    if (q.indexOf('\u5EF6\u4F38') !== -1 || q.indexOf('\u76F8\u5173') !== -1)
-        return '<p>\u63A8\u8350\u5EF6\u4F38\u9605\u8BFB:</p><ul>'+
-            '<li><strong>\u666E\u9C81\u65AF\u7279</strong> \u2014 \u300A\u8FFD\u5FC6\u4F4D\u4E8E\u65AF\u4E07\u5BB6\u300B: \u5173\u4E8E\u8BB0\u5FC6\u4E0E\u65F6\u95F4</li>'+
-            '<li><strong>\u62C9\u65AF\u91D1</strong> \u2014 \u300A\u5171\u4EAB\u4E4B\u4E0B\u300B: \u827A\u672F\u4E0E\u793E\u4F1A\u4EF7\u503C</li>'+
-            '<li><strong>\u8428\u7279</strong> \u2014 \u300A\u5FC3\u7406\u5F71\u54CD\u7684\u6545\u4E8B\u300B: \u4E2A\u4EBA\u81EA\u7531\u4E0E\u7406\u6027</li></ul>';
-    return '<p>\u4E0D\u9519\u7684\u95EE\u9898! \u57FA\u4E8E\u300C'+r.title+'\u300D:</p><p>\u5C5E\u4E8E <em>'+r.categoryLabel+'</em>, \u6D89\u53CA <strong>'+(r.tags?r.tags.slice(0,3).join('/'):'\u601D\u8003')+'</strong>.</p>'+
-        '<blockquote>'+r.summary.substring(0,120)+(r.summary.length>120?'...':'')+'</blockquote>'+
-        '<p>\u53EF\u4EE5\u7EE7\u7EED\u63A2\u8BA8, \u6216<a href="'+r.url+'" target="_blank" style="color:#4F46E5;font-weight:600;text-decoration:none;">\u9605\u8BFB\u539F\u6587 \u2192</a></p>';
+    if (q.indexOf('thesis')!==-1||q.indexOf('argument')!==-1||q.indexOf('core')!==-1)
+        return '<p>The <em>core thesis</em>:</p>'+
+            '<blockquote>&#x201C'+r.substring_safe(r.summary,0,80)+(r.summary.length>80?'...':'')+'&#x201D</blockquote>'+
+            '<p>The author argues that <strong>'+(r.tags[0]||'reading')+'</strong> is not merely a utilitarian concept but a <em>mode of thinking</em>. Through multiple thinkers\u2019 divergent views, multidimensionality is demonstrated.</p>'+
+            '<p>You could also ask: What implications does this have for AI+education trends?</p>';
+    if (q.indexOf('question')!==-1||q.indexOf('flaw')!==-1||q.indexOf('weakness')!==-1||q.indexOf('problem')!==-1)
+        return '<p>From a <em>critical perspective</em>:</p><ol>'+
+            '<li><strong>Sample bias</strong> — Mainly references European literature/philosophy; generalizability may be limited.</li>'+
+            '<li><strong>"Reading" definition simplified</strong> — Leans toward literary texts, but modern reading forms (social media/podcasts) are far more diverse now.</li>'+
+            '<li><strong>Lack of empirical evidence</strong> — More assertion than data; common in philosophical writing but makes arguments feel like belief rather than knowledge.</li></ol>'+
+            '<p>But it\\u2019s not all flaws \\u2014 the author\\u2019s intent is clearly to <em>provoke thought</em>, not provide answers. Do you think this approach is effective?</p>';
+    if (q.indexOf('apply')!==-1||q.indexOf('practical')!==-1||q.indexOf('work')!=-1)
+        return '<p>Connecting article to practice:</p><ul>'+
+            '<li><strong>Content products</strong>: Does every piece need to "educate"? Or should it leave space for reader’s own thought?</li>'+
+            '<li><strong>Educational products</strong>: AI+education shouldn’t just be "top-down delivery"; more importantly, help students build their own frameworks.</li>'+
+            '<li><strong>Personal growth</strong>: The real value of reading might be an "open thinking model" rather than simple knowledge accumulation.</li></ul>';
+    if (q.indexOf('extend')!==-1||q.indexOf('related')!==-1)
+        return '<p>Recommended extended reading:</p><ul>'+
+            '<li><strong>Proust</strong> — In Search of Lost Time: Memory and time</li>'+
+            '<li><strong>Ruskin</strong> — Unto This Last: Art and social value</li>'+
+            '<li><strong>Sartre</strong> — Nausea: Personal freedom and existence</li></ul>';
+    return '<p>Great question! Based on &#x300C;'+r.title+'&#x300D;</p><p>It belongs to <em>'+r.categoryLabel+'</em>, covering <strong>'+(r.tags?r.tags.slice(0,3).join('/'):'thinking')+'</strong>.</p>'+
+        '<blockquote>'+r.substring_safe(r.summary,0,120)+(r.summary.length>120?'...':'')+'</blockquote>'+
+        '<p>Continue exploring, or <a href="'+r.url+'" target="_blank" style="color:#8B2500;font-weight:600;text-decoration:none;">Read original &rarr;</a></p>';
 }
 
+// Safe substring helper
+String.prototype.substring_safe = function(s,len){try{return this.substring(s,s+len)}catch(e){return ''};}
+
 function suggestMoreQuestions(prevQ) {
-    var pool = ['\u8FD9\u4E2A\u89C2\u70B9\u5728\u5B9E\u9645\u4E2D\u6210\u7ACB\u5417?','\u4F5C\u8005\u7684\u7ACB\u573A\u662F\u4EC0\u4E48?','\u6709\u54EA\u4E9B\u76F8\u53CD\u7684\u89C2\u70B9?','\u80FD\u4E3E\u4E2A\u5177\u4F53\u4F8B\u5B50\u5417?','\u5BF9\u6211\u7684\u884C\u4E1A\u6709\u4EC0\u4E48\u542F\u53D1?'];
+    var pool = ['Does this hold up in practice?', 'What is the author\\u2019s stance?', 'Are there opposing views?', 'Can you give a concrete example?', 'What are the industry implications?'];
     return pool.sort(function(){return Math.random()-0.5}).slice(0,3);
 }
 
 window.addEventListener('storage', function(e) {
     if (e.key && e.key.indexOf('kb_ai_response_')===0) {
-        try {
-            var data=JSON.parse(e.newValue), aid=data.articleId||data.id;
-            removeTyping(aid); addAIMessage(aid,'assistant',data.content,true);
-            var sb=document.getElementById('aiSendBtn-'+aid); if(sb) sb.disabled=false; updateAIBadge(aid);
-        } catch(err) {}
+        try { var data=JSON.parse(e.newValue), aid=data.articleId||data.id; removeTyping(aid); addAIMessage(aid,'assistant',data.content,true); var sb=document.getElementById('aiSendBtn-'+aid); if(sb) sb.disabled=false; updateAIBadge(aid); } catch(err) {}
     }
 });
 
@@ -1316,42 +1598,32 @@ window.addEventListener('storage', function(e) {
 // ============================================================
 function onGlobalSearch() {
     searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
-    if (currentTab === 'research' || currentTab === 'work') {
-        renderCards();
-    } else if (currentTab === 'reading') {
-        renderReading();
-    }
+    if (currentTab === 'research' || currentTab === 'work') { renderCards(); }
+    else if (currentTab === 'reading') { renderReading(); }
 }
 
 // ============================================================
 // UTILITIES
 // ============================================================
 function detectMode() {
-    const isLocal = location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-    const notice = document.getElementById('topNotice');
-    const modeLabel = document.getElementById('modeLabel');
-
-    if (!isLocal) {
-        if (modeLabel) modeLabel.textContent = '线上模式';
-        if (notice) notice.innerHTML = '☁️ 当前为 <strong>线上模式</strong> · 固定访问地址，随时随地查看知识库';
-        }
+    var isLocal = location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+    var notice = document.getElementById('topNotice');
+    var modeLabel = document.getElementById('modeLabel');
+    if (!isLocal) { if (modeLabel) modeLabel.textContent = 'Online Mode'; if (notice) notice.innerHTML = '&#x2601; Currently in <strong>Online Mode</strong> &middot; Fixed URL, access anytime anywhere'; }
 }
 
 function openInFinder() {
-    try {
-        showToast('\u6587\u4ef6\u5939\u4f4d\u7f6e: /Users/tal/WorkBuddy/20260430163602/knowledge-base/');
-        if (location.protocol !== 'file:') fetch('/__open_in_finder?path=' + encodeURIComponent('/Users/tal/WorkBuddy/20260430163602/knowledge-base/')).catch(function(){});
-    } catch(e) {}
+    try { showToast('Location: /Users/tal/WorkBuddy/20260430163602/knowledge-base/'); if (location.protocol !== 'file:') fetch('/__open_in_finder?path='+encodeURIComponent('/Users/tal/WorkBuddy/20260430163602/knowledge-base/')).catch(function(){}); } catch(e) {}
 }
 
 function showToast(msg) {
-    const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+    var t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
     setTimeout(function(){ t.classList.remove('show'); }, 2500);
 }
 
 function copyLink() {
-    navigator.clipboard.writeText(window.location.href).then(function(){showToast('\u5730\u5740\u5df2\u590d\u5236\u5230\u526a\u8d34\u677f')}).catch(function(){
-        var inp = document.createElement('input'); inp.value = window.location.href; document.body.appendChild(inp); inp.select(); document.execCommand('copy'); document.body.removeChild(inp); showToast('\u5730\u5740\u5df2\u590d\u5236');
+    navigator.clipboard.writeText(window.location.href).then(function(){showToast('Link copied to clipboard')}).catch(function(){
+        var inp = document.createElement('input'); inp.value = window.location.href; document.body.appendChild(inp); inp.select(); document.execCommand('copy'); document.body.removeChild(inp); showToast('Link copied to clipboard');
     });
 }
 
@@ -1360,39 +1632,19 @@ function sendToAI() {
     if (!val) return;
     localStorage.setItem('kb_ai_question', val);
     document.getElementById('aiInput').value = '';
-    showToast('\u95ee\u9898\u5df1\u53d1\u9001\uff01\u8bf7\u5728 WorkBuddy \u5bf9\u8bdd\u4e2d\u67e5\u770b\u56de\u590d');
+    showToast('Question sent! Check WorkBuddy chat for response.');
     try { window.location.href = 'workbuddy://?q=' + encodeURIComponent(val); } catch(e) {}
 }
 
 function showDeployGuide() { document.getElementById('deployModal').style.display = 'flex'; }
 function closeDeployGuide() { document.getElementById('deployModal').style.display = 'none'; }
-function startDeploy() { showToast('\u6b63\u5728\u51c6\u5907\u90e8\u7f72... \u544a\u8bc9\u6211\u4f60\u7684 GitHub \u7528\u6237\u540d\uff01'); }
+function startDeploy() { showToast('Preparing deployment... Tell me your GitHub username!'); }
 
 // Keyboard shortcut
 document.addEventListener('keydown', function(e) {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        document.getElementById('searchInput').focus();
-    }
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); document.getElementById('searchInput').focus(); }
 });
-</script>
 
-  <!-- ====== TAB: Others ====== -->
-  <div class="tab-panel" id="panel-others" style="display:none;">
-    <div class="section" id="othersSection">
-        <div class="section-title cat-others-area">
-          <div class="section-icon">&#x1FA9;</div>
-          <h2>Others</h2>
-        </div>
-        <div class="empty-hint" id="othersEmptyHint">
-          <div class="empty-icon">&#x1FA9;</div>
-          <h3>Others</h3>
-          <p>Miscellaneous items that don't fit elsewhere.</p>
-        </div>
-    </div>
-  </div>
-
-  </div>
 
 </div><!-- /main-content-wrapper -->
 </body>
