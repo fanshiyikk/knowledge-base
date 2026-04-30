@@ -548,9 +548,10 @@
       </div>
     </div>
     <div class="header-stats" id="headerStats">
-      <div class="stat"><div class="stat-num">30</div><div class="stat-label">调研报告</div></div>
-      <div class="stat"><div class="stat-num" id="readingCount">1</div><div class="stat-label">阅读收藏</div></div>
-      <div class="stat"><div class="stat-num">3</div><div class="stat-label">分类板块</div></div>
+      <div class="stat"><div class="stat-num">30</div><div class="stat-label">Work</div></div>
+      <div class="stat"><div class="stat-num" id="readingCount">1</div><div class="stat-label">Reading</div></div>
+      <div class="stat"><div class="stat-num" id="writingCount">0</div><div class="stat-label">Writing</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Areas</div></div>
     </div>
     <div class="header-actions">
     <button class="lock-header-btn" onclick="lockKB()" title="锁定知识库">🔒 锁定</button>
@@ -597,27 +598,28 @@
 <!-- Bookmark Bar -->
 <div class="bookmark-bar" id="bookmarkBar">
   <span class="bookmark-label">⌨️ 快捷入口</span>
-  <a class="bookmark-item" onclick="switchTab('research')" id="tabLinkResearch">📊 产品调研</a>
-  <a class="bookmark-item reading-active" onclick="switchTab('reading')" id="tabLinkReading">📖 阅读专区</a>
-  <a class="bookmark-item" href="#workSection">📝 工作笔记</a>
+  <a class="bookmark-item" onclick="switchTab('work')" id="tabLinkWork">🔵 Work Area</a>
+  <a class="bookmark-item reading-active" onclick="switchTab('reading')" id="tabLinkReading">🔴 Reading Area</a>
+  <a class="bookmark-item" onclick="switchTab('writing')" id="tabLinkWriting">🩷 Writing Area</a>
+  <a class="bookmark-item" onclick="switchTab('others')" id="tabLinkOthers">⚪ Others</a>
   <span style="width:1px;height:16px;background:var(--border-light);display:inline-block;vertical-align:middle;"></span>
-  <a class="bookmark-item" onclick="setReadingFilter('insight',this)">💡 洞见</a>
-  <a class="bookmark-item" onclick="setReadingFilter('industry',this)">📰 行业</a>
-  <a class="bookmark-item" onclick="setReadingFilter('ai-edu',this)">🎓 AI+教育</a>
+  <a class="bookmark-item" onclick="setReadingFilter('literature',this)">📖 Literature</a>
+  <a class="bookmark-item" onclick="setReadingFilter('philosophy',this)">🧠 Philosophy</a>
   <a class="bookmark-item" onclick="document.getElementById('aiInput').focus(); document.getElementById('aiBanner').scrollIntoView({behavior:'smooth'})">❓ 问AI ↗</a>
 </div>
 
 <!-- Main -->
 <div class="main">
 
-  <!-- Tab Navigation -->
+  <!-- Tab Navigation - 4 Areas -->
   <div class="tab-nav" id="tabNav">
-    <button class="tab-btn active" onclick="switchTab('research', this)" data-tab="research">📊 产品调研 <span class="tab-count">30</span></button>
-    <button class="tab-btn" onclick="switchTab('reading', this)" data-tab="reading">📖 阅读专区 <span class="tab-count" id="tabReadingCount">1</span></button>
-    <button class="tab-btn" onclick="switchTab('work', this)" data-tab="work">📝 工作笔记 <span class="tab-count">待补充</span></button>
+    <button class="tab-btn active" onclick="switchTab('work', this)" data-tab="work">🔵 Work Area <span id="tabWorkCount">30</span></button>
+    <button class="tab-btn" onclick="switchTab('reading', this)" data-tab="reading">🔴 Reading Area <span id="tabReadingCount">1</span></button>
+    <button class="tab-btn" onclick="switchTab('writing', this)" data-tab="writing">🩷 Writing Area <span id="tabWritingCount">0</span></button>
+    <button class="tab-btn" onclick="switchTab('others', this)" data-tab="others">⚪ Others <span id="tabOthersCount">0</span></button>
   </div>
 
-  <!-- ====== TAB: Product Research ====== -->
+  <!-- ====== AREA: Work Area (Product Research) ====== -->
   <div class="tab-panel" id="panel-work" style="">
 
     <div class="quick-bar" id="quickBar">
@@ -632,9 +634,9 @@
 
     <div class="section" id="workSection">
       <div class="section-header">
-        <div class="section-title cat-research">
-          <div class="section-icon">📊</div>
-          产品调研
+        <div class="section-title cat-work-area">
+          <div class="section-icon">🔵</div>
+          Work Area — Product Research
           <span class="badge count-blue">30份报告</span>
         </div>
       </div>
@@ -645,45 +647,27 @@
         <p style="font-size:13px;margin-top:4px;">试试其他关键词吧</p>
       </div>
     </div>
-
-    <div class="section" id="workSection">
-      <div class="section-header">
-        <div class="section-title cat-work">
-          <div class="section-icon">📝</div>
-          工作相关
-          <span class="badge count-green">待补充</span>
-        </div>
-      </div>
-      <div class="card" style="cursor:default;" onmouseover="this.style.transform='none'">
-        <div class="card-body">
-          <p style="color:var(--text-secondary);font-size:14px;">工作笔记、项目记录、会议纪要等内容将在这里展示。告诉 AI "记一下 xxx" 即可添加。</p>
-        </div>
-      </div>
-    </div>
   </div>
 
-  <!-- ====== TAB: Reading Zone ====== -->
+  <!-- ====== AREA: Reading Area ====== -->
   <div class="tab-panel" id="panel-reading" style="display:none;">
 
     <div class="quick-bar" id="readingQuickBar">
-      <button class="quick-btn active" onclick="setReadingFilter('all', this)">📚 全部阅读</button>
-      <button class="quick-btn" onclick="setReadingFilter('industry', this)">📰 行业深度</button>
-      <button class="quick-btn" onclick="setReadingFilter('report', this)">📊 研究报告</button>
-      <button class="quick-btn" onclick="setReadingFilter('tech', this)">🛠️ 产品技术</button>
-      <button class="quick-btn" onclick="setReadingFilter('news', this)">⚡ 资讯动态</button>
-      <button class="quick-btn" onclick="setReadingFilter('insight', this)">💡 思考洞见</button>
-      <button class="quick-btn" onclick="setReadingFilter('ai-edu', this)">🎓 AI+教育</button>
-      <button class="quick-btn" onclick="setReadingFilter('unread', this)">🔴 未读</button>
+      <button class="quick-btn active" onclick="setReadingFilter('all', this)">📚 All</button>
+      <button class="quick-btn" onclick="setReadingFilter('literature', this)">📖 Literature</button>
+      <button class="quick-btn" onclick="setReadingFilter('philosophy', this)">🧠 Philosophy</button>
+      <button class="quick-btn" onclick="setReadingFilter('nonfiction', this)">📰 Non-fiction</button>
+      <button class="quick-btn" onclick="setReadingFilter('others', this)">📌 Others</button>
+      <button class="quick-btn" onclick="setReadingFilter('unread', this)">🔴 Unread</button>
     </div>
 
     <div class="section" id="readingSection">
       <div class="section-header">
-        <div class="section-title cat-reading">
-          <div class="section-icon">📖</div>
-          阅读专区
+        <div class="section-title cat-reading-area">
+          <div class="section-icon">🔴</div>
+          Reading Area
           <span class="badge count-red" id="readingBadgeCount">1 篇收藏</span>
         </div>
-        <button class="batch-btn primary" onclick="showAddReadingHint()" style="font-size:13px;padding:6px 16px;">➕ 添加新链接</button>
       </div>
 
       <div class="reading-grid" id="readingContainer"></div>
@@ -696,31 +680,54 @@
     </div>
   </div>
 
-  <!-- ====== TAB: Writing Area ====== -->
+  <!-- ====== AREA: Writing Area ====== -->
   <div class="tab-panel" id="panel-writing" style="display:none;">
     <div class="quick-bar" id="writingQuickBar">
-      <button class="quick-btn active" onclick="setWritingFilter('all', this)">All Writing</button>
-      <button class="quick-btn" onclick="setWritingFilter('essays', this)">✏️ Essays</button>
+      <button class="quick-btn active" onclick="setWritingFilter('all', this)">✏️ All</button>
+      <button class="quick-btn" onclick="setWritingFilter('essays', this)">📝 Essays</button>
       <button class="quick-btn" onclick="setWritingFilter('novels', this)">📖 Novels</button>
-      <button class="quick-btn" onclick="setWritingFilter('casual', this)">📝 Casual Notes</button>
+      <button class="quick-btn" onclick="setWritingFilter('casual', this)">📒 Casual Notes</button>
     </div>
     <div class="section" id="writingSection">
+      <div class="section-header">
         <div class="section-title cat-writing-area">
-          <div class="section-icon">✏️</div>
-          <h2>Writing Area</h2>
+          <div class="section-icon">🩷</div>
+          Writing Area
+          <span class="badge" id="writingBadgeCount" style="background:#FDF2F8;color:#EC4899;">0 篇</span>
         </div>
-        <div class="empty-hint" id="writingEmptyHint">
-            <div class="section-icon">✏️</div>
-            <h3>Start Writing</h3>
-            <p>Your essays, novels, and casual notes will appear here.</p>
-        </div>
+      </div>
+      <div class="reading-grid" id="writingContainer"></div>
+      <div class="empty-state" id="writingEmpty" style="display:none;">
+        <div class="empty-state-icon">✏️</div>
+        <h3>Start Writing</h3>
+        <p>Your essays, novels, and casual notes will appear here.</p>
+        <p style="font-size:13px;margin-top:4px;color:var(--text-muted);">告诉 AI "写一篇..." 或 "记个笔记..." 即可添加</p>
+      </div>
     </div>
   </div>
 
-  <!-- ====== TAB: Others ====== -->
+  <!-- ====== AREA: Others ====== -->
+  <div class="tab-panel" id="panel-others" style="display:none;">
+    <div class="section" id="othersSection">
+      <div class="section-header">
+        <div class="section-title cat-others-area">
+          <div class="section-icon">⚪</div>
+          Others
+          <span class="badge" id="othersBadgeCount" style="background:#F3F4F6;color:#6B7280;">0 项</span>
+        </div>
+      </div>
+      <div class="reading-grid" id="othersContainer"></div>
+      <div class="empty-state" id="othersEmpty" style="">
+        <div class="empty-state-icon">📌</div>
+        <h3>Others</h3>
+        <p>Miscellaneous content will appear here.</p>
+        <p style="font-size:13px;margin-top:4px;color:var(--text-muted);">其他类型的内容可以放在这里</p>
+      </div>
+    </div>
+  </div>
 
 <div class="footer">
-  <p>我的知识库 — 由 AI 协助管理 · 最后更新 2026-04-30 · 按 <kbd style="background:var(--bg);padding:2px 8px;border-radius:4px;border:1px solid var(--border);font-size:11px;">Cmd+D</kbd> 收藏此页</p>
+  <p>My Knowledge Base — Work · Reading · Writing · Life · 最后更新 2026-04-30</p>
 </div>
 
 <!-- Deploy Guide Modal -->
@@ -884,8 +891,8 @@ const readings = [
         source: "利维坦（Aeon 译文）",
         author: "Flora Champy / 译：tamiya2",
         url: "https://mp.weixin.qq.com/s/g4UYcPl-FxGhs8k0Fv9U9w",
-        category: "insight",
-        categoryLabel: "💡 思考洞见",
+        category: "literature",
+        categoryLabel: "📚 Literature",
         tags: ["阅读", "文学哲学", "个人自由", "普鲁斯特"],
         summary: "通过普鲁斯特、拉斯金、卢梭等思想家对阅读功能的分歧，论证文学的真正价值不在于道德说教，而在于训练独立思考的能力。语言为理解保留了空间，允许犹豫与误读。文学是通往个人自由的隐秘路径。",
         addedAt: "2026-04-30",
@@ -897,9 +904,10 @@ const readings = [
 // ============================================================
 // STATE
 // ============================================================
-let currentTab = 'research';
+let currentTab = 'work';
 let currentFilter = 'all';
 let currentReadingFilter = 'all';
+let currentWritingFilter = 'all';
 let searchQuery = '';
 
 // ============================================================
@@ -915,44 +923,29 @@ updateCounts();
 // ============================================================
 function switchTab(tabName, btn) {
   currentTab = tabName;
-  if (btn) {
-    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
-    btn.classList.add('active');
-  }
   // Hide all panels
   document.querySelectorAll('.tab-panel').forEach(function(p) { p.style.display = 'none'; });
   // Show target panel
-  var targetId = 'panel-' + tabName;
-  var targetPanel = document.getElementById(targetId);
+  var targetPanel = document.getElementById('panel-' + tabName);
   if (targetPanel) { targetPanel.style.display = 'block'; }
-    currentTab = tabName;
 
-    // Hide all panels
-    document.querySelectorAll('.tab-panel').forEach(function(p) { p.style.display = 'none'; });
-    // Show target panel
-    document.getElementById('panel-' + tabName).style.display = 'block';
+  // Update tab buttons
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  else {
+    var targetBtn = document.querySelector('.tab-btn[data-tab="' + tabName + '"]');
+    if (targetBtn) targetBtn.classList.add('active');
+  }
 
-    // Update tab buttons
-    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
-    if (btn) btn.classList.add('active');
-    else {
-        document.querySelector('.tab-btn[data-tab="' + tabName + '"]').classList.add('active');
-    }
+  // Update bookmark bar active state
+  document.querySelectorAll('.bookmark-item').forEach(function(l) { l.classList.remove('reading-active'); });
+  var linkMap = { 'work': 'tabLinkWork', 'reading': 'tabLinkReading', 'writing': 'tabLinkWriting', 'others': 'tabLinkOthers' };
+  var activeLink = document.getElementById(linkMap[tabName]);
+  if (activeLink) activeLink.classList.add('reading-active');
 
-    // Update bookmark bar active state
-    var linkResearch = document.getElementById('tabLinkResearch');
-    var linkReading = document.getElementById('tabLinkReading');
-    if (linkResearch) linkResearch.classList.remove('reading-active');
-    if (linkReading) linkReading.classList.remove('reading-active');
-    if (tabName === 'reading' && linkReading) linkReading.classList.add('reading-active');
-    if (tabName === 'research' && linkResearch) linkResearch.classList.add('reading-active');
-
-    // Scroll to main content
-    document.querySelector('.main').scrollIntoView({ behavior: 'instant' });
-
-    // Clear search when switching tabs
-    // document.getElementById('searchInput').value = '';
-    // searchQuery = '';
+  // Scroll to main content
+  var mainEl = document.querySelector('.main');
+  if (mainEl) mainEl.scrollIntoView({ behavior: 'instant' });
 }
 
 // ============================================================
