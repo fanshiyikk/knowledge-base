@@ -506,7 +506,6 @@
       <button class="lock-btn" onclick="checkPassword()">→</button>
     </div>
     <div class="lock-error" id="lockError">❌ 密码错误，请重试</div>
-    <div class="lock-hint">密码提示：498896090</div>
   </div>
 </div>
 
@@ -1332,9 +1331,7 @@ function detectMode() {
     if (!isLocal) {
         if (modeLabel) modeLabel.textContent = '线上模式';
         if (notice) notice.innerHTML = '☁️ 当前为 <strong>线上模式</strong> · 固定访问地址，随时随地查看知识库';
-    }
-}
-    if (urlEl) { urlEl.textContent = location.href; urlEl.title = location.href; urlEl.style.cursor = 'pointer'; urlEl.onclick = function(){ navigator.clipboard.writeText(location.href); showToast('\u5730\u5740\u5df2\u590d\u5236\uff01'); }; }
+        }
 }
 
 function openInFinder() {
