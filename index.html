@@ -178,12 +178,15 @@ h1, h2, h3, .logo h1, .card-title, .section-title, .hero-title, .lock-title { fo
 .header {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
-  padding: 28px 36px;
-  position: sticky;
+  padding: 20px 36px;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
+body { padding-top: 120px; }
 .header-top {
   display: flex;
   align-items: center;
@@ -297,6 +300,11 @@ h1, h2, h3, .logo h1, .card-title, .section-title, .hero-title, .lock-title { fo
   gap: 6px;
   overflow-x: auto;
   flex-wrap: nowrap;
+  position: fixed;
+  top: 74px;
+  left: 0;
+  right: 0;
+  z-index: 99;
 }
 .bookmark-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; white-space: nowrap; }
 .bookmark-item {
@@ -326,18 +334,25 @@ h1, h2, h3, .logo h1, .card-title, .section-title, .hero-title, .lock-title { fo
 .main {
   max-width: 1160px;
   margin: 0 auto;
-  padding: 36px 24px;
+  padding: 36px 24px 48px;
   position: relative;
   z-index: 1;
 }
 
-/* ====== Tab Navigation (Underline Style - LitHub) ====== */
+/* ====== Tab Navigation (Sticky + Underline Style) ====== */
 .tab-nav {
   display: flex;
   gap: 0;
-  margin-bottom: 32px;
   border-bottom: 2px solid var(--border);
   width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg);
+  margin-bottom: 24px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  padding-top: 4px;
 }
 .tab-btn {
   padding: 12px 22px;
@@ -981,9 +996,10 @@ h1, h2, h3, .logo h1, .card-title, .section-title, .hero-title, .lock-title { fo
 
 /* ====== Responsive ====== */
 @media (max-width: 768px) {
-  .header { padding: 20px 18px; }
+  .header { padding: 16px 18px; }
+  body { padding-top: 110px; }
+  .bookmark-bar { padding: 10px 16px; top: 64px; }
   .ai-banner { margin: 18px 18px 0; padding: 18px 20px; }
-  .bookmark-bar { padding: 10px 16px; }
   .main { padding: 24px 16px; }
   .categories-grid { grid-template-columns: 1fr; }
   .reading-card { flex-direction: column; gap: 14px; padding: 18px 20px; }
@@ -1024,13 +1040,12 @@ h1, h2, h3, .logo h1, .card-title, .section-title, .hero-title, .lock-title { fo
   <div class="hero-content">
     <h1>My Knowledge Base</h1>
     <p>工作 · 阅读 · 写作 · 生活 — 个人知识管理与成长记录</p>
-    <div class="hero-badge">&#x1F4C1; 知识库 v2.0 · Teal Edition</div>
   </div>
   <div class="hero-decoration"></div>
 </div>
 
 <!-- Top Notice -->
-<div class="top-notice" id="topNotice">
+<div class="top-notice" id="topNotice" style="display:none;">
   &#x1F4CD; 当前为 <strong id="modeLabel">本地模式</strong> &middot; <a href="javascript:void(0)" onclick="showDeployGuide()">点击了解在线部署</a> &rarr; 获取固定访问链接
 </div>
 
