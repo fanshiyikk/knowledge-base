@@ -400,21 +400,25 @@
   @keyframes dotBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
 
   /* Reading Category Colors */
-  .cat-industry .reading-card { border-left-color: #3B82F6; }
-  .cat-report .reading-card { border-left-color: #8B5CF6; }
-  .cat-tech .reading-card { border-left-color: #F59E0B; }
-  .cat-news .reading-card { border-left-color: #EF4444; }
-  .cat-insight .reading-card { border-left-color: #EC4899; }
-  .cat-ai-edu .reading-card { border-left-color: #14B8A6; }
+  /* Work Area categories */
+  .cat-literature .reading-card { border-left-color: #8B5CF6; }
+  .cat-philosophy .reading-card { border-left-color: #F59E0B; }
+  .cat-nonfiction .reading-card { border-left-color: #3B82F6; }
+  .cat-others .reading-card { border-left-color: #6B7280; }
+  /* Writing Area categories */
+  .cat-essays .reading-card { border-left-color: #EC4899; }
+  .cat-novels .reading-card { border-left-color: #14B8A6; }
+  .casual-notes .reading-card { border-left-color: #059669; }
 
   .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
   .empty-state-icon { font-size: 48px; margin-bottom: 16px; }
 
   .footer { text-align: center; padding: 32px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border-light); margin-top: 40px; }
 
-  .cat-research .section-icon { background: #EEF2FF; color: var(--primary); }
-  .cat-work .section-icon { background: #ECFDF5; color: #059669; }
-  .cat-reading .section-icon { background: var(--reading-light); color: var(--reading-color); }
+  .cat-work-area .section-icon { background: #EEF2FF; color: var(--primary); }
+  .cat-reading-area .section-icon { background: var(--reading-light); color: var(--reading-color); }
+  .cat-writing-area .section-icon { background: #FDF2F8; color: #EC4899; }
+  .cat-others-area .section-icon { background: #F3F4F6; color: #6B7280; }
   .count-blue { background: #EEF2FF; color: var(--primary); }
   .count-green { background: #ECFDF5; color: #059669; }
   .count-red { background: var(--reading-light); color: var(--reading-color); }
@@ -537,10 +541,10 @@
 <div class="header">
   <div class="header-top">
     <div class="logo">
-      <div class="logo-icon">K</div>
+      <div class="logo-icon">✨</div>
       <div>
-        <h1>我的知识库</h1>
-        <p>Personal Knowledge Base</p>
+        <h1>My Knowledge Base</h1>
+        <p>Work · Reading · Writing · Life</p>
       </div>
     </div>
     <div class="header-stats" id="headerStats">
@@ -614,7 +618,7 @@
   </div>
 
   <!-- ====== TAB: Product Research ====== -->
-  <div class="tab-panel" id="panel-research">
+  <div class="tab-panel" id="panel-work" style="">
 
     <div class="quick-bar" id="quickBar">
       <button class="quick-btn active" onclick="setFilter('all', this)">全部内容</button>
@@ -626,7 +630,7 @@
       <button class="quick-btn" onclick="setFilter('k12', this)">📚 K12/学科</button>
     </div>
 
-    <div class="section" id="researchSection">
+    <div class="section" id="workSection">
       <div class="section-header">
         <div class="section-title cat-research">
           <div class="section-icon">📊</div>
@@ -692,25 +696,28 @@
     </div>
   </div>
 
-  <!-- ====== TAB: Work Notes ====== -->
-  <div class="tab-panel" id="panel-work" style="display:none;">
-    <div class="section" style="margin-top:20px;">
-      <div class="section-header">
-        <div class="section-title cat-work">
-          <div class="section-icon">📝</div>
-          工作相关
+  <!-- ====== TAB: Writing Area ====== -->
+  <div class="tab-panel" id="panel-writing" style="display:none;">
+    <div class="quick-bar" id="writingQuickBar">
+      <button class="quick-btn active" onclick="setWritingFilter('all', this)">All Writing</button>
+      <button class="quick-btn" onclick="setWritingFilter('essays', this)">✏️ Essays</button>
+      <button class="quick-btn" onclick="setWritingFilter('novels', this)">📖 Novels</button>
+      <button class="quick-btn" onclick="setWritingFilter('casual', this)">📝 Casual Notes</button>
+    </div>
+    <div class="section" id="writingSection">
+        <div class="section-title cat-writing-area">
+          <div class="section-icon">✏️</div>
+          <h2>Writing Area</h2>
         </div>
-      </div>
-      <div class="card" style="cursor:default;">
-        <div class="card-body">
-          <p style="color:var(--text-secondary);font-size:14px;margin-bottom:12px;">工作笔记、项目记录、会议纪要等内容将在这里展示。</p>
-          <p style="color:var(--text-secondary);font-size:14px;">告诉 AI <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:13px;">"记一下 xxx"</code> 或 <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:13px;">"存到知识库 xxx"</code> 即可添加内容。</p>
+        <div class="empty-hint" id="writingEmptyHint">
+            <div class="section-icon">✏️</div>
+            <h3>Start Writing</h3>
+            <p>Your essays, novels, and casual notes will appear here.</p>
         </div>
-      </div>
     </div>
   </div>
 
-</div>
+  <!-- ====== TAB: Others ====== -->
 
 <div class="footer">
   <p>我的知识库 — 由 AI 协助管理 · 最后更新 2026-04-30 · 按 <kbd style="background:var(--bg);padding:2px 8px;border-radius:4px;border:1px solid var(--border);font-size:11px;">Cmd+D</kbd> 收藏此页</p>
@@ -907,6 +914,17 @@ updateCounts();
 // TAB SWITCHING
 // ============================================================
 function switchTab(tabName, btn) {
+  currentTab = tabName;
+  if (btn) {
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  // Hide all panels
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.style.display = 'none'; });
+  // Show target panel
+  var targetId = 'panel-' + tabName;
+  var targetPanel = document.getElementById(targetId);
+  if (targetPanel) { targetPanel.style.display = 'block'; }
     currentTab = tabName;
 
     // Hide all panels
@@ -1093,6 +1111,13 @@ function setReadingFilter(filter, btn) {
     if (btn) btn.classList.add('reading-active');
 }
 
+function setWritingFilter(filter, btn) {
+    if (currentTab !== 'writing') switchTab('writing');
+    currentWritingFilter = filter;
+    document.querySelectorAll('#writingQuickBar .quick-btn').forEach(function(b) { b.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+}
+
 function markAsRead(id) {
     readings.forEach(function(r) {
         if (r.id === id) r.readStatus = 'read';
@@ -1107,7 +1132,7 @@ function updateCounts() {
     var rbc = document.getElementById('readingBadgeCount');
     if (rc) rc.textContent = readings.length;
     if (tbc) tbc.textContent = readings.length;
-    if (rbc) rbc.textContent = readings.length + ' \u7bc7\u6536\u85cf';
+    if (rbc) rbc.textContent = readings.length + ' collections';
 }
 
 function showAddReadingHint() {
@@ -1404,6 +1429,22 @@ document.addEventListener('keydown', function(e) {
     }
 });
 </script>
+
+  <!-- ====== TAB: Others ====== -->
+  <div class="tab-panel" id="panel-others" style="display:none;">
+    <div class="section" id="othersSection">
+        <div class="section-title cat-others-area">
+          <div class="section-icon">&#x1FA9;</div>
+          <h2>Others</h2>
+        </div>
+        <div class="empty-hint" id="othersEmptyHint">
+          <div class="empty-icon">&#x1FA9;</div>
+          <h3>Others</h3>
+          <p>Miscellaneous items that don't fit elsewhere.</p>
+        </div>
+    </div>
+  </div>
+
 </div><!-- /main-content-wrapper -->
 </body>
 </html>
